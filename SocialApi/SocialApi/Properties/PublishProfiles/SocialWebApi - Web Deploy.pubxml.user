@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA/8rQAxEttEWa3SDQqkv3fQAAAAACAAAAAAAQZgAAAAEAACAAAAC2PE6M3NBxFfROw9GdnsLWleMeWbQ1my8PkNPK1J7rnwAAAAAOgAAAAAIAACAAAAA4gBWjXcjsA/CxPWwFrJUfZCeLZtMMqhO8smc2MNlykIAAAADI6byJShZg3jHAnbR47CYCsNqXprp/gFelvD4nyapZOnuGTSQAS/SGnxJtopPCYYSx+qAFaoa96CejwycmVJWesds8kk8AFVPiVD+LyXUM+FhHXx78ZpWoLqE4YKtSvIf87kc87EF3mS9hpt/KDK8+OJu+y3D6i3UwujFykR8xj0AAAAAVLiZoG/2eApJDu5YZsWWK5uBbtDXIAIbjsokKLJh+p7sOPn4SrumCMNkWEwW2t+837/jSQ8hnaFWaeHJp3at+</EncryptedPassword>
+    <History>False|2024-12-01T22:56:07.4219511Z||;False|2024-12-01T19:33:23.0978928-03:00||;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <EFMigrations Include="SocialApi.Data.WebSocialDbContext">
+      <Value>Data Source=socialwebapi-server.database.windows.net,1433%3bInitial Catalog=socialwebapi-database%3bUser ID=socialwebapi-server-admin%3bPassword=k4lf2%24OhoPIKhOsu</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

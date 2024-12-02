@@ -1,0 +1,80 @@
+[
+  {
+    "ContainingType": "SocialApi.Controllers.RecordsController",
+    "Method": "GetAll",
+    "RelativePath": "api/Records",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SocialApi.Controllers.RecordsController",
+    "Method": "CreateRecord",
+    "RelativePath": "api/Records",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "recordsToAdd",
+        "Type": "SocialApi.Models.DTO.AddRecordsRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SocialApi.Controllers.RecordsController",
+    "Method": "GetById",
+    "RelativePath": "api/Records/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SocialApi.Controllers.RecordsController",
+    "Method": "GetAllNsfw",
+    "RelativePath": "api/Records/{isNsfw}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "isNsfw",
+        "Type": "System.Boolean",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SocialApi.Controllers.RecordsController",
+    "Method": "GetTopLiked",
+    "RelativePath": "api/Records/top-likes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SocialApi.Controllers.RecordsController",
+    "Method": "GetTopViewed",
+    "RelativePath": "api/Records/top-views",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
