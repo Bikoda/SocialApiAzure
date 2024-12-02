@@ -21,11 +21,14 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-      - name: Build with dotnet
-        run: dotnet build ./SocialApi/SocialApi.sln --configuration Release
+      - name: Restore   
+        run: dotnet restore ./SocialApi/SocialApi.sln
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+      - name: Build with dotnet
+        run: dotnet build ./SocialApi/SocialApi.sln --configuration Release --no Restore
+
+      - name: Publish
+        run: dotnet publish ./SocialApi/SocialApi.sln --configuration Release --no Build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -33,24 +36,3 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
-  deploy:
-    runs-on: windows-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: .net-app
-      
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'SocialApi'
-          slot-name: 'Production'
-          package: .
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_8dea30280a2e41d1974a08992ccb21d8 }}
