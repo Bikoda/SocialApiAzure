@@ -1,0 +1,28 @@
+name: publish 🚀
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: restore
+        run: dotnet.restore ./SocialApi.sln
+
+      - name: build
+        run: dotnet build ./SocialApi.Sln --configuration Release -- no restore
+
+      - name: publish
+        run: dotnet.publish  .SocialApi.sln --configuration Release -- no build
+
