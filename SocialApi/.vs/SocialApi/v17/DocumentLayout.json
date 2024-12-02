@@ -1,0 +1,232 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|c:\\users\\bikod\\onedrive\\desktop\\webapi to db\\socialapi\\socialapi\\socialapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|solutionrelative:socialapi\\socialapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|c:\\users\\bikod\\onedrive\\desktop\\webapi to db\\socialapi\\socialapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|solutionrelative:socialapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\9.0.100\\Sdks\\Microsoft.NET.Sdk.Publish\\targets\\PublishTargets\\Microsoft.NET.Sdk.Publish.MSDeploy.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|c:\\users\\bikod\\onedrive\\desktop\\webapi to db\\socialapi\\socialapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|solutionrelative:socialapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|c:\\users\\bikod\\onedrive\\desktop\\webapi to db\\socialapi\\socialapi\\models\\domain\\records.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|solutionrelative:socialapi\\models\\domain\\records.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|c:\\users\\bikod\\onedrive\\desktop\\webapi to db\\socialapi\\socialapi\\migrations\\20241127221755_second migration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|solutionrelative:socialapi\\migrations\\20241127221755_second migration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|c:\\users\\bikod\\onedrive\\desktop\\webapi to db\\socialapi\\socialapi\\controllers\\recordscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|solutionrelative:socialapi\\controllers\\recordscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|c:\\users\\bikod\\onedrive\\desktop\\webapi to db\\socialapi\\socialapi\\migrations\\websocialdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|solutionrelative:socialapi\\migrations\\websocialdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|c:\\users\\bikod\\onedrive\\desktop\\webapi to db\\socialapi\\socialapi\\models\\dto\\addrecordsrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|solutionrelative:socialapi\\models\\dto\\addrecordsrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|c:\\users\\bikod\\onedrive\\desktop\\webapi to db\\socialapi\\socialapi\\models\\dto\\recordsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|solutionrelative:socialapi\\models\\dto\\recordsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|c:\\users\\bikod\\onedrive\\desktop\\webapi to db\\socialapi\\socialapi\\migrations\\20241127222029_third migration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|solutionrelative:socialapi\\migrations\\20241127222029_third migration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|c:\\users\\bikod\\onedrive\\desktop\\webapi to db\\socialapi\\socialapi\\data\\websocialdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|solutionrelative:socialapi\\data\\websocialdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|c:\\users\\bikod\\onedrive\\desktop\\webapi to db\\socialapi\\socialapi\\migrations\\20241127215816_first migration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}|SocialApi\\SocialApi.csproj|solutionrelative:socialapi\\migrations\\20241127215816_first migration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Microsoft.NET.Sdk.Publish.MSDeploy.targets",
+              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.100\\Sdks\\Microsoft.NET.Sdk.Publish\\targets\\PublishTargets\\Microsoft.NET.Sdk.Publish.MSDeploy.targets",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\9.0.100\\Sdks\\Microsoft.NET.Sdk.Publish\\targets\\PublishTargets\\Microsoft.NET.Sdk.Publish.MSDeploy.targets",
+              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.100\\Sdks\\Microsoft.NET.Sdk.Publish\\targets\\PublishTargets\\Microsoft.NET.Sdk.Publish.MSDeploy.targets",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\9.0.100\\Sdks\\Microsoft.NET.Sdk.Publish\\targets\\PublishTargets\\Microsoft.NET.Sdk.Publish.MSDeploy.targets",
+              "ViewState": "AgIAAIgAAAAAAAAAAAAmwJMAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2024-12-01T23:07:59.231Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "RecordsDto.cs",
+              "DocumentMoniker": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Models\\DTO\\RecordsDto.cs",
+              "RelativeDocumentMoniker": "SocialApi\\Models\\DTO\\RecordsDto.cs",
+              "ToolTip": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Models\\DTO\\RecordsDto.cs",
+              "RelativeToolTip": "SocialApi\\Models\\DTO\\RecordsDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-01T17:59:32.761Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AddRecordsRequestDto.cs",
+              "DocumentMoniker": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Models\\DTO\\AddRecordsRequestDto.cs",
+              "RelativeDocumentMoniker": "SocialApi\\Models\\DTO\\AddRecordsRequestDto.cs",
+              "ToolTip": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Models\\DTO\\AddRecordsRequestDto.cs",
+              "RelativeToolTip": "SocialApi\\Models\\DTO\\AddRecordsRequestDto.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAAAsAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-01T17:59:26.205Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "20241127222029_Third Migration.cs",
+              "DocumentMoniker": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Migrations\\20241127222029_Third Migration.cs",
+              "RelativeDocumentMoniker": "SocialApi\\Migrations\\20241127222029_Third Migration.cs",
+              "ToolTip": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Migrations\\20241127222029_Third Migration.cs",
+              "RelativeToolTip": "SocialApi\\Migrations\\20241127222029_Third Migration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-27T22:20:29.674Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "20241127221755_Second Migration.cs",
+              "DocumentMoniker": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Migrations\\20241127221755_Second Migration.cs",
+              "RelativeDocumentMoniker": "SocialApi\\Migrations\\20241127221755_Second Migration.cs",
+              "ToolTip": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Migrations\\20241127221755_Second Migration.cs",
+              "RelativeToolTip": "SocialApi\\Migrations\\20241127221755_Second Migration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-27T22:17:55.596Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "WebSocialDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Migrations\\WebSocialDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "SocialApi\\Migrations\\WebSocialDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Migrations\\WebSocialDbContextModelSnapshot.cs",
+              "RelativeToolTip": "SocialApi\\Migrations\\WebSocialDbContextModelSnapshot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-27T21:58:54.871Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "20241127215816_First Migration.cs",
+              "DocumentMoniker": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Migrations\\20241127215816_First Migration.cs",
+              "RelativeDocumentMoniker": "SocialApi\\Migrations\\20241127215816_First Migration.cs",
+              "ToolTip": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Migrations\\20241127215816_First Migration.cs",
+              "RelativeToolTip": "SocialApi\\Migrations\\20241127215816_First Migration.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAAAAwAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-27T21:58:17.201Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SocialApi.csproj",
+              "DocumentMoniker": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\SocialApi.csproj",
+              "RelativeDocumentMoniker": "SocialApi\\SocialApi.csproj",
+              "ToolTip": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\SocialApi.csproj",
+              "RelativeToolTip": "SocialApi\\SocialApi.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAwAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-11-27T21:36:43.05Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "RecordsController.cs",
+              "DocumentMoniker": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Controllers\\RecordsController.cs",
+              "RelativeDocumentMoniker": "SocialApi\\Controllers\\RecordsController.cs",
+              "ToolTip": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Controllers\\RecordsController.cs",
+              "RelativeToolTip": "SocialApi\\Controllers\\RecordsController.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAAAE0AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-27T21:35:32.261Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "WebSocialDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Data\\WebSocialDbContext.cs",
+              "RelativeDocumentMoniker": "SocialApi\\Data\\WebSocialDbContext.cs",
+              "ToolTip": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Data\\WebSocialDbContext.cs",
+              "RelativeToolTip": "SocialApi\\Data\\WebSocialDbContext.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAuwA4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-27T21:33:57.733Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\appsettings.json",
+              "RelativeDocumentMoniker": "SocialApi\\appsettings.json",
+              "ToolTip": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\appsettings.json",
+              "RelativeToolTip": "SocialApi\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-11-27T21:19:59.634Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Records.cs",
+              "DocumentMoniker": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Models\\Domain\\Records.cs",
+              "RelativeDocumentMoniker": "SocialApi\\Models\\Domain\\Records.cs",
+              "ToolTip": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Models\\Domain\\Records.cs",
+              "RelativeToolTip": "SocialApi\\Models\\Domain\\Records.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-27T21:13:29.544Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Program.cs",
+              "RelativeDocumentMoniker": "SocialApi\\Program.cs",
+              "ToolTip": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\Program.cs",
+              "RelativeToolTip": "SocialApi\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-27T21:10:55.198Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
