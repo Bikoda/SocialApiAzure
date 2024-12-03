@@ -9,7 +9,7 @@ on:
     branches:
       - main
 env:
-  AZURE_WEBAPP_NAME: SocialApi
+  AZURE_WEBAPP_NAME: SocialApiAzure
   AZURE_WEBAPP_PACKAGE_PATH: "./Publish"
   
 
@@ -38,6 +38,6 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: "${{secrets.AZURE_PUBLISH_PROFILE}}"
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          publish-profile: ${{secrets.AZURE_PUBLISH_PROFILE}}
+          package: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
 
