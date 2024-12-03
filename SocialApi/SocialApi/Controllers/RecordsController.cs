@@ -107,6 +107,34 @@ namespace SocialApi.Controllers
         }
 
         [HttpGet]
+        [Route("most-views")]
+        public IActionResult GetMostViewed()
+        {
+            try
+            {
+                var topItems = dbContext.LogRecord
+                    .OrderByDescending(x => x.Views) // Order by Likes in descending order
+                    .Take(25) // Take the top 25 items
+                    .Select(x => new RecordsDto
+                    {
+                        Id = x.Id,
+                        Path = x.Path,
+                        Views = x.Views,
+                        Likes = x.Likes,
+                        IsNsfw = x.IsNsfw,
+                        CreatedOn = x.CreatedOn
+                    })
+                    .ToList(); // Convert the result to a list
+
+                return Ok(topItems); // Return the result
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message); // Handle any exceptions
+            }
+        }
+
+        [HttpGet]
         [Route("top-likes")]
         public IActionResult GetTopLiked()
         {
@@ -131,6 +159,34 @@ namespace SocialApi.Controllers
             catch (Exception ex4)
             {
                 return BadRequest(ex4.Message); // Handle any exceptions
+            }
+        }
+
+        [HttpGet]
+        [Route("most-likes")]
+        public IActionResult GetMostLiked()
+        {
+            try
+            {
+                var topItems = dbContext.LogRecord
+                    .OrderByDescending(x => x.Likes) // Order by Likes in descending order
+                    .Take(25) // Take the top 25 items
+                    .Select(x => new RecordsDto
+                    {
+                        Id = x.Id,
+                        Path = x.Path,
+                        Views = x.Views,
+                        Likes = x.Likes,
+                        IsNsfw = x.IsNsfw,
+                        CreatedOn = x.CreatedOn
+                    })
+                    .ToList(); // Convert the result to a list
+
+                return Ok(topItems); // Return the result
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message); // Handle any exceptions
             }
         }
 
@@ -285,6 +341,45 @@ namespace SocialApi.Controllers
                 return BadRequest($"An error occurred: {ex.Message}");
             }
         }
-        
+
+
+        [HttpPost("{id}/add-view")]
+        public IActionResult AddView(int id)
+        {
+            try
+            {
+                // Find the record by ID
+                var record = dbContext.LogRecord.FirstOrDefault(r => r.Id == id);
+
+                if (record == null)
+                {
+                    return NotFound($"Record with ID {id} not found.");
+                }
+
+                // Increment the Likes property
+                record.Views += 1;
+
+                // Save changes to the database
+                dbContext.SaveChanges();
+
+                // Return the updated record
+                var updatedRecordDto = new RecordsDto
+                {
+                    Id = record.Id,
+                    Path = record.Path,
+                    Views = record.Views,
+                    Likes = record.Likes,
+                    IsNsfw = record.IsNsfw,
+                    CreatedOn = record.CreatedOn
+                };
+
+                return Ok(updatedRecordDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+
     }
 }
