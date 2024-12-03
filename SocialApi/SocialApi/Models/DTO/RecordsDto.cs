@@ -1,5 +1,6 @@
 ﻿namespace SocialApi.Models.DTO
 {
+    
     public class RecordsDto
     {
 

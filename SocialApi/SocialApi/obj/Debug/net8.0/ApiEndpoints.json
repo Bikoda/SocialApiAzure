@@ -43,6 +43,38 @@
   },
   {
     "ContainingType": "SocialApi.Controllers.RecordsController",
+    "Method": "AddLike",
+    "RelativePath": "api/Records/{id}/add-like",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SocialApi.Controllers.RecordsController",
+    "Method": "RemoveLike",
+    "RelativePath": "api/Records/{id}/remove-like",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SocialApi.Controllers.RecordsController",
     "Method": "GetAllNsfw",
     "RelativePath": "api/Records/{isNsfw}",
     "HttpMethod": "GET",

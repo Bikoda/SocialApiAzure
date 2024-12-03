@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MWZ8fyVAbqU=",
+  "dgSpecHash": "Y4FPT3awF/Q=",
   "success": true,
-  "projectFilePath": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\SocialApi.csproj",
+  "projectFilePath": "C:\\Users\\bikod\\OneDrive\\Desktop\\Prod\\SocialApiAzure\\SocialApi\\SocialApi\\SocialApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\bikod\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\bikod\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

@@ -5176,11 +5176,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\SocialApi.csproj",
+      "projectUniqueName": "C:\\Users\\bikod\\OneDrive\\Desktop\\Prod\\SocialApiAzure\\SocialApi\\SocialApi\\SocialApi.csproj",
       "projectName": "SocialApi",
-      "projectPath": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\SocialApi.csproj",
+      "projectPath": "C:\\Users\\bikod\\OneDrive\\Desktop\\Prod\\SocialApiAzure\\SocialApi\\SocialApi\\SocialApi.csproj",
       "packagesPath": "C:\\Users\\bikod\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\bikod\\OneDrive\\Desktop\\WebApi to DB\\SocialApi\\SocialApi\\obj\\",
+      "outputPath": "C:\\Users\\bikod\\OneDrive\\Desktop\\Prod\\SocialApiAzure\\SocialApi\\SocialApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

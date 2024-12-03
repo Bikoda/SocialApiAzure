@@ -1,5 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SocialApi.Data;
 
 namespace SocialApi
@@ -38,6 +39,7 @@ namespace SocialApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            
 
             // Use CORS
             app.UseCors("AllowAll");

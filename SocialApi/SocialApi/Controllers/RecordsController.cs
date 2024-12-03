@@ -205,5 +205,86 @@ namespace SocialApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("{id}/add-like")]
+        public IActionResult AddLike(int id)
+        {
+            try
+            {
+                // Find the record by ID
+                var record = dbContext.LogRecord.FirstOrDefault(r => r.Id == id);
+
+                if (record == null)
+                {
+                    return NotFound($"Record with ID {id} not found.");
+                }
+
+                // Increment the Likes property
+                record.Likes += 1;
+
+                // Save changes to the database
+                dbContext.SaveChanges();
+
+                // Return the updated record
+                var updatedRecordDto = new RecordsDto
+                {
+                    Id = record.Id,
+                    Path = record.Path,
+                    Views = record.Views,
+                    Likes = record.Likes,
+                    IsNsfw = record.IsNsfw,
+                    CreatedOn = record.CreatedOn
+                };
+
+                return Ok(updatedRecordDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+
+        
+        [HttpPost("{id}/remove-like")]
+        public IActionResult RemoveLike(int id)
+        {
+            try
+            {
+                // Find the record by ID
+                var record = dbContext.LogRecord.FirstOrDefault(r => r.Id == id);
+
+                if (record == null)
+                {
+                    return NotFound($"Record with ID {id} not found.");
+                }
+
+                // Decrement the Likes property, ensuring it doesn't go below zero
+                if (record.Likes > 0)
+                {
+                    record.Likes = record.Likes -1;
+                }
+
+                // Save changes to the database
+                dbContext.SaveChanges();
+
+                // Return the updated record
+                var updatedRecordDto = new RecordsDto
+                {
+                    Id = record.Id,
+                    Path = record.Path,
+                    Views = record.Views,
+                    Likes = record.Likes,
+                    IsNsfw = record.IsNsfw,
+                    CreatedOn = record.CreatedOn
+                };
+
+                return Ok(updatedRecordDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+        
     }
 }
