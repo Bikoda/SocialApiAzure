@@ -138,7 +138,7 @@ namespace SocialApi.Controllers
       
         [HttpGet]
         [Route("page-likes")]
-        public IActionResult GetPageLiked(int page = 0, int pageSize = 9)
+        public IActionResult GetPageLiked(int page, int pageSize)
         {
             try
             {
@@ -176,7 +176,7 @@ namespace SocialApi.Controllers
                     From = skip + 1, // First item index of this page
                     To = Math.Min(skip + records.Count, total), // Last item index of this page
                     Total = total, // Total number of records
-                    Pages = totalPages // Total number of pages
+                    Pages = totalPages -1// Total number of pages
                 };
 
                 return Ok(result); // Return the result object
@@ -189,7 +189,7 @@ namespace SocialApi.Controllers
 
         [HttpGet]
         [Route("page-views")]
-        public IActionResult GetPageViewed(int page = 0, int pageSize = 9)
+        public IActionResult GetPageViewed(int page, int pageSize)
         {
             try
             {
@@ -227,7 +227,7 @@ namespace SocialApi.Controllers
                     From = skip + 1, // First item index of this page
                     To = Math.Min(skip + records.Count, total), // Last item index of this page
                     Total = total, // Total number of records
-                    Pages = totalPages // Total number of pages
+                    Pages = totalPages -1// Total number of pages
                 };
 
                 return Ok(result); // Return the result object

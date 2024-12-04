@@ -107,26 +107,6 @@
   },
   {
     "ContainingType": "SocialApi.Controllers.RecordsController",
-    "Method": "GetMostLiked",
-    "RelativePath": "api/Records/most-likes",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "SocialApi.Controllers.RecordsController",
-    "Method": "GetMostViewed",
-    "RelativePath": "api/Records/most-views",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "SocialApi.Controllers.RecordsController",
     "Method": "GetPageLiked",
     "RelativePath": "api/Records/page-likes",
     "HttpMethod": "GET",

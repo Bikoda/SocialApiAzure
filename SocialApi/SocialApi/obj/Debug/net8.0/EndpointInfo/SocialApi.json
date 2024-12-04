@@ -81,31 +81,7 @@
         }
       }
     },
-    "/api/Records/most-views": {
-      "get": {
-        "tags": [
-          "Records"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Records/top-likes": {
-      "get": {
-        "tags": [
-          "Records"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Records/most-likes": {
       "get": {
         "tags": [
           "Records"
@@ -128,8 +104,7 @@
             "in": "query",
             "schema": {
               "type": "integer",
-              "format": "int32",
-              "default": 0
+              "format": "int32"
             }
           },
           {
@@ -137,8 +112,7 @@
             "in": "query",
             "schema": {
               "type": "integer",
-              "format": "int32",
-              "default": 9
+              "format": "int32"
             }
           }
         ],
@@ -160,8 +134,7 @@
             "in": "query",
             "schema": {
               "type": "integer",
-              "format": "int32",
-              "default": 0
+              "format": "int32"
             }
           },
           {
@@ -169,8 +142,7 @@
             "in": "query",
             "schema": {
               "type": "integer",
-              "format": "int32",
-              "default": 9
+              "format": "int32"
             }
           }
         ],
