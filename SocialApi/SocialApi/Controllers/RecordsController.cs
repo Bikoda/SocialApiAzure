@@ -106,34 +106,7 @@ namespace SocialApi.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("most-views")]
-        public IActionResult GetMostViewed()
-        {
-            try
-            {
-                var topItems = dbContext.LogRecord
-                    .OrderByDescending(x => x.Views) // Order by Likes in descending order
-                    .Take(25) // Take the top 25 items
-                    .Select(x => new RecordsDto
-                    {
-                        Id = x.Id,
-                        Path = x.Path,
-                        Views = x.Views,
-                        Likes = x.Likes,
-                        IsNsfw = x.IsNsfw,
-                        CreatedOn = x.CreatedOn
-                    })
-                    .ToList(); // Convert the result to a list
-
-                return Ok(topItems); // Return the result
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message); // Handle any exceptions
-            }
-        }
-
+        
         [HttpGet]
         [Route("top-likes")]
         public IActionResult GetTopLiked()
@@ -162,33 +135,109 @@ namespace SocialApi.Controllers
             }
         }
 
+      
         [HttpGet]
-        [Route("most-likes")]
-        public IActionResult GetMostLiked()
+        [Route("page-likes")]
+        public IActionResult GetPageLiked(int page = 0, int pageSize = 9)
         {
             try
             {
-                var topItems = dbContext.LogRecord
+                if (page < 0 || pageSize <= 0)
+                {
+                    return BadRequest("Invalid input: 'page' must be 0 or greater, and 'pageSize' must be greater than 0.");
+                }
+
+                int total = dbContext.LogRecord.Count(); // Total number of records
+                int totalPages = (int)Math.Ceiling(total / (double)pageSize); // Calculate total pages
+
+                // Calculate the starting index for the page
+                int skip = page * pageSize;
+
+                // Get the requested page of items
+                var records = dbContext.LogRecord
                     .OrderByDescending(x => x.Likes) // Order by Likes in descending order
-                    .Take(25) // Take the top 25 items
-                    .Select(x => new RecordsDto
+                    .Skip(skip) // Skip items for previous pages
+                    .Take(pageSize) // Take items for the current page
+                    .Select(x => new
                     {
-                        Id = x.Id,
-                        Path = x.Path,
-                        Views = x.Views,
-                        Likes = x.Likes,
-                        IsNsfw = x.IsNsfw,
-                        CreatedOn = x.CreatedOn
+                        id = x.Id,
+                        path = x.Path,
+                        views = x.Views,
+                        likes = x.Likes,
+                        isNsfw = x.IsNsfw,
+                        createdOn = x.CreatedOn
                     })
                     .ToList(); // Convert the result to a list
 
-                return Ok(topItems); // Return the result
+                // Create the response object
+                var result = new
+                {
+                    Records = records,
+                    From = skip + 1, // First item index of this page
+                    To = Math.Min(skip + records.Count, total), // Last item index of this page
+                    Total = total, // Total number of records
+                    Pages = totalPages // Total number of pages
+                };
+
+                return Ok(result); // Return the result object
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message); // Handle any exceptions
             }
         }
+
+        [HttpGet]
+        [Route("page-views")]
+        public IActionResult GetPageViewed(int page = 0, int pageSize = 9)
+        {
+            try
+            {
+                if (page < 0 || pageSize <= 0)
+                {
+                    return BadRequest("Invalid input: 'page' must be 0 or greater, and 'pageSize' must be greater than 0.");
+                }
+
+                int total = dbContext.LogRecord.Count(); // Total number of records
+                int totalPages = (int)Math.Ceiling(total / (double)pageSize); // Calculate total pages
+
+                // Calculate the starting index for the page
+                int skip = page * pageSize;
+
+                // Get the requested page of items
+                var records = dbContext.LogRecord
+                    .OrderByDescending(x => x.Views) // Order by Likes in descending order
+                    .Skip(skip) // Skip items for previous pages
+                    .Take(pageSize) // Take items for the current page
+                    .Select(x => new
+                    {
+                        id = x.Id,
+                        path = x.Path,
+                        views = x.Views,
+                        likes = x.Likes,
+                        isNsfw = x.IsNsfw,
+                        createdOn = x.CreatedOn
+                    })
+                    .ToList(); // Convert the result to a list
+
+                // Create the response object
+                var result = new
+                {
+                    Records = records,
+                    From = skip + 1, // First item index of this page
+                    To = Math.Min(skip + records.Count, total), // Last item index of this page
+                    Total = total, // Total number of records
+                    Pages = totalPages // Total number of pages
+                };
+
+                return Ok(result); // Return the result object
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message); // Handle any exceptions
+            }
+        }
+
 
         [HttpPost]
         public IActionResult CreateRecord([FromBody] AddRecordsRequestDto recordsToAdd)

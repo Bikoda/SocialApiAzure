@@ -127,6 +127,48 @@
   },
   {
     "ContainingType": "SocialApi.Controllers.RecordsController",
+    "Method": "GetPageLiked",
+    "RelativePath": "api/Records/page-likes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SocialApi.Controllers.RecordsController",
+    "Method": "GetPageViewed",
+    "RelativePath": "api/Records/page-views",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SocialApi.Controllers.RecordsController",
     "Method": "GetTopLiked",
     "RelativePath": "api/Records/top-likes",
     "HttpMethod": "GET",
