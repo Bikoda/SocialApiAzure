@@ -168,6 +168,38 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "SocialApi.Controllers.UserNftsController",
+    "Method": "GetPairedNfts",
+    "RelativePath": "api/UserNfts/get-paired-nfts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "address",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SocialApi.Controllers.UserNftsController",
+    "Method": "PairUserWithRecord",
+    "RelativePath": "api/UserNfts/pair",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "SocialApi.Models.DTO.AddUserNftRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SocialApi.Controllers.UsersController",
     "Method": "GetAllUsers",
     "RelativePath": "api/Users",
@@ -188,6 +220,22 @@
       {
         "Name": "usersToAdd",
         "Type": "SocialApi.Models.DTO.AddUsersRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SocialApi.Controllers.UsersController",
+    "Method": "GetUserByAddress",
+    "RelativePath": "api/Users/{address}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "address",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

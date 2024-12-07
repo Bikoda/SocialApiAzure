@@ -1,14 +1,19 @@
-﻿namespace SocialApi.Models.Domain
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace SocialApi.Models.Domain
 {
     public class UsersNft
     {
-        public int Id { get; set; }
+        [Key]
+        public int UserRecordId { get; set; }
 
-        // Foreign key referencing the Users table
         public int UserId { get; set; }
         public Users User { get; set; } // Navigation property for User
 
-        // Foreign key for Record, without a navigation property
         public int RecordId { get; set; }
+        public Records Record { get; set; } // Navigation property for Record
+
+        public DateTime CreatedOn { get; set; }
     }
 }
