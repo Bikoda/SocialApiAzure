@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialApi.Data;
 
@@ -11,9 +12,11 @@ using SocialApi.Data;
 namespace SocialApi.Migrations
 {
     [DbContext(typeof(WebSocialDbContext))]
-    partial class WebSocialDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241207075717_Fourth Migration")]
+    partial class FourthMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,11 +27,11 @@ namespace SocialApi.Migrations
 
             modelBuilder.Entity("SocialApi.Models.Domain.Records", b =>
                 {
-                    b.Property<int>("RecordId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecordId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -46,18 +49,18 @@ namespace SocialApi.Migrations
                     b.Property<int>("Views")
                         .HasColumnType("int");
 
-                    b.HasKey("RecordId");
+                    b.HasKey("Id");
 
                     b.ToTable("LogRecord");
                 });
 
             modelBuilder.Entity("SocialApi.Models.Domain.Users", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -73,18 +76,18 @@ namespace SocialApi.Migrations
                     b.Property<string>("Nickname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("LogUser");
                 });
 
             modelBuilder.Entity("SocialApi.Models.Domain.UsersNft", b =>
                 {
-                    b.Property<int>("UserRecordId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserRecordId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -95,11 +98,16 @@ namespace SocialApi.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("UserRecordId");
+                    b.Property<int?>("UsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("RecordId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UsersId");
 
                     b.ToTable("UserNfts");
                 });
@@ -113,10 +121,14 @@ namespace SocialApi.Migrations
                         .IsRequired();
 
                     b.HasOne("SocialApi.Models.Domain.Users", "User")
-                        .WithMany("UserNfts")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("SocialApi.Models.Domain.Users", null)
+                        .WithMany("UserNfts")
+                        .HasForeignKey("UsersId");
 
                     b.Navigation("Record");
 

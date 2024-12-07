@@ -6,7 +6,7 @@ namespace SocialApi.Models.Domain
     {
 
         [Key]
-        public int Id { get; set; }
+        public int RecordId { get; set; }
         public required string Path { get; set; }
         public int Views { get; set; }
         public int Likes { get; set; }

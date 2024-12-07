@@ -33,7 +33,7 @@ namespace SocialApi.Controllers
                 {
                     recordDto.Add(new RecordsDto()
                     {
-                        Id = record.Id,
+                        RecordId = record.RecordId,
                         Path = record.Path,
                         Views = record.Views,
                         Likes = record.Likes,
@@ -58,11 +58,11 @@ namespace SocialApi.Controllers
             //var toDb =  dbContext.LogRecord.Find(id);
             try
             {
-                var toDb = dbContext.LogRecord.FirstOrDefault(x => x.Id == id);
+                var toDb = dbContext.LogRecord.FirstOrDefault(x => x.RecordId == id);
 
                 var recordDto = new RecordsDto
                 {
-                    Id = toDb.Id,
+                    RecordId = toDb.RecordId,
                     Path = toDb.Path,
                     Views = toDb.Views,
                     Likes = toDb.Likes,
@@ -89,7 +89,7 @@ namespace SocialApi.Controllers
                     .Take(50) // Take the top 50 items
                     .Select(x => new RecordsDto
                     {
-                        Id = x.Id,
+                        RecordId = x.RecordId,
                         Path = x.Path,
                         Views = x.Views,
                         Likes = x.Likes,
@@ -106,7 +106,7 @@ namespace SocialApi.Controllers
             }
         }
 
-        
+
         [HttpGet]
         [Route("top-likes")]
         public IActionResult GetTopLiked()
@@ -118,7 +118,7 @@ namespace SocialApi.Controllers
                     .Take(50) // Take the top 50 items
                     .Select(x => new RecordsDto
                     {
-                        Id = x.Id,
+                        RecordId = x.RecordId,
                         Path = x.Path,
                         Views = x.Views,
                         Likes = x.Likes,
@@ -135,7 +135,7 @@ namespace SocialApi.Controllers
             }
         }
 
-      
+
         [HttpGet]
         [Route("page-likes")]
         public IActionResult GetPageLiked(int page, int pageSize)
@@ -160,7 +160,7 @@ namespace SocialApi.Controllers
                     .Take(pageSize) // Take items for the current page
                     .Select(x => new
                     {
-                        id = x.Id,
+                        RecordId = x.RecordId,
                         path = x.Path,
                         views = x.Views,
                         likes = x.Likes,
@@ -176,7 +176,7 @@ namespace SocialApi.Controllers
                     From = skip + 1, // First item index of this page
                     To = Math.Min(skip + records.Count, total), // Last item index of this page
                     Total = total, // Total number of records
-                    Pages = totalPages -1// Total number of pages
+                    Pages = totalPages - 1// Total number of pages
                 };
 
                 return Ok(result); // Return the result object
@@ -211,7 +211,7 @@ namespace SocialApi.Controllers
                     .Take(pageSize) // Take items for the current page
                     .Select(x => new
                     {
-                        id = x.Id,
+                        RecordId = x.RecordId,
                         path = x.Path,
                         views = x.Views,
                         likes = x.Likes,
@@ -227,7 +227,7 @@ namespace SocialApi.Controllers
                     From = skip + 1, // First item index of this page
                     To = Math.Min(skip + records.Count, total), // Last item index of this page
                     Total = total, // Total number of records
-                    Pages = totalPages -1// Total number of pages
+                    Pages = totalPages - 1// Total number of pages
                 };
 
                 return Ok(result); // Return the result object
@@ -260,7 +260,7 @@ namespace SocialApi.Controllers
 
                 var newRecordsDto = new RecordsDto
                 {
-                    Id = recordsDomainModel.Id,
+                    RecordId = recordsDomainModel.RecordId,
                     Path = recordsDomainModel.Path,
                     Views = recordsDomainModel.Views,
                     Likes = recordsDomainModel.Likes,
@@ -271,7 +271,7 @@ namespace SocialApi.Controllers
 
                 newRecordsDto.CreatedOn = DateTime.Now;
 
-                return CreatedAtAction(nameof(GetById), new { id = newRecordsDto.Id }, newRecordsDto);
+                return CreatedAtAction(nameof(GetById), new { id = newRecordsDto.RecordId }, newRecordsDto);
             }
             catch (Exception ex5)
             {
@@ -293,7 +293,7 @@ namespace SocialApi.Controllers
                 // Map Domain Models to DTOs
                 var recordDto = records.Select(record => new RecordsDto
                 {
-                    Id = record.Id,
+                    RecordId = record.RecordId,
                     Path = record.Path,
                     Views = record.Views,
                     Likes = record.Likes,
@@ -317,7 +317,7 @@ namespace SocialApi.Controllers
             try
             {
                 // Find the record by ID
-                var record = dbContext.LogRecord.FirstOrDefault(r => r.Id == id);
+                var record = dbContext.LogRecord.FirstOrDefault(r => r.RecordId == id);
 
                 if (record == null)
                 {
@@ -333,7 +333,7 @@ namespace SocialApi.Controllers
                 // Return the updated record
                 var updatedRecordDto = new RecordsDto
                 {
-                    Id = record.Id,
+                    RecordId = record.RecordId,
                     Path = record.Path,
                     Views = record.Views,
                     Likes = record.Likes,
@@ -349,14 +349,14 @@ namespace SocialApi.Controllers
             }
         }
 
-        
+
         [HttpPost("{id}/remove-like")]
         public IActionResult RemoveLike(int id)
         {
             try
             {
                 // Find the record by ID
-                var record = dbContext.LogRecord.FirstOrDefault(r => r.Id == id);
+                var record = dbContext.LogRecord.FirstOrDefault(r => r.RecordId == id);
 
                 if (record == null)
                 {
@@ -366,7 +366,7 @@ namespace SocialApi.Controllers
                 // Decrement the Likes property, ensuring it doesn't go below zero
                 if (record.Likes > 0)
                 {
-                    record.Likes = record.Likes -1;
+                    record.Likes = record.Likes - 1;
                 }
 
                 // Save changes to the database
@@ -375,7 +375,7 @@ namespace SocialApi.Controllers
                 // Return the updated record
                 var updatedRecordDto = new RecordsDto
                 {
-                    Id = record.Id,
+                    RecordId = record.RecordId,
                     Path = record.Path,
                     Views = record.Views,
                     Likes = record.Likes,
@@ -398,7 +398,7 @@ namespace SocialApi.Controllers
             try
             {
                 // Find the record by ID
-                var record = dbContext.LogRecord.FirstOrDefault(r => r.Id == id);
+                var record = dbContext.LogRecord.FirstOrDefault(r => r.RecordId == id);
 
                 if (record == null)
                 {
@@ -414,7 +414,7 @@ namespace SocialApi.Controllers
                 // Return the updated record
                 var updatedRecordDto = new RecordsDto
                 {
-                    Id = record.Id,
+                    RecordId = record.RecordId,
                     Path = record.Path,
                     Views = record.Views,
                     Likes = record.Likes,

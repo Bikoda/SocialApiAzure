@@ -21,17 +21,30 @@ namespace SocialApi.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Configure UsersNft primary key
+            modelBuilder.Entity<UsersNft>()
+                .HasKey(un => un.UserRecordId);
+
+            // Configure User navigation
+            modelBuilder.Entity<UsersNft>()
+                .HasOne(un => un.User)
+                .WithMany(u => u.UserNfts)
+                .HasForeignKey(un => un.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Configure Record navigation
+            modelBuilder.Entity<UsersNft>()
+                .HasOne(un => un.Record) // Navigation property
+                .WithMany() // No reverse navigation from Records
+                .HasForeignKey(un => un.RecordId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(modelBuilder);
 
-            // Map UserNft to the "UserNfts" table
-            modelBuilder.Entity<UsersNft>().ToTable("UserNfts");
-
-            // Configure relationships if necessary
-            modelBuilder.Entity<UsersNft>()
-                .HasOne(un => un.User) // Navigation property
-                .WithMany()           // No inverse navigation
-                .HasForeignKey(un => un.UserId)
-                .OnDelete(DeleteBehavior.Cascade); // Handle cascade delete if needed
+            var usersNftEntity = modelBuilder.Model.FindEntityType(typeof(UsersNft));
+            Console.WriteLine(usersNftEntity?.FindNavigation("Record") != null
+                ? "Record navigation found."
+                : "Record navigation not found.");
         }
     }
 }

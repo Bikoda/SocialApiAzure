@@ -36,9 +36,9 @@ namespace SocialApi.Controllers
                 {
                     recordDto.Add(new UsersDto()
                     {
-                        Id = record.Id,               // Access the properties of the individual record
+                        UserId = record.UserId,               // Access the properties of the individual record
                         Nickname = record.Nickname,
-                        Messages = record.Messages,
+                        Email = record.Email,
                         Address = record.Address,
                         CreatedOn = record.CreatedOn
                     });
@@ -60,13 +60,13 @@ namespace SocialApi.Controllers
             //var toDb =  dbContext.LogRecord.Find(id);
             try
             {
-                var toDb = dbContext.LogUser.FirstOrDefault(x => x.Id == id);
+                var toDb = dbContext.LogUser.FirstOrDefault(x => x.UserId == id);
 
                 var userDto = new UsersDto
                 {
-                    Id = toDb.Id,
+                    UserId = toDb.UserId,
                     Nickname = toDb.Nickname,
-                    Messages = toDb.Messages,
+                    Email = toDb.Email,
                     Address = toDb.Address,
                     CreatedOn = toDb.CreatedOn
                 };
@@ -80,6 +80,36 @@ namespace SocialApi.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("{address}")]
+        public IActionResult GetUserByAddress(string address)
+        {
+            try
+            {
+                var toDb = dbContext.LogUser.FirstOrDefault(x => x.Address == address);
+                if (toDb == null)
+                {
+                    return NotFound($"No user found with address: {address}");
+                }
+
+                var userDto = new UsersDto
+                {
+                    UserId = toDb.UserId,
+                    Nickname = toDb.Nickname,
+                    Email = toDb.Email,
+                    Address = toDb.Address,
+                    CreatedOn = toDb.CreatedOn
+                };
+
+                return Ok(userDto);
+            }
+            catch (Exception ex)
+            {
+                // Log exception here (e.g., using a logging framework like Serilog or NLog)
+                return StatusCode(500, "An unexpected error occurred. Please try again later.");
+            }
+        }
+
         [HttpPost]
         public IActionResult CreateUser([FromBody] AddUsersRequestDto usersToAdd)
         {
@@ -89,7 +119,7 @@ namespace SocialApi.Controllers
                 {
 
                     Nickname = usersToAdd.Nickname,
-                    Messages = usersToAdd.Messages,
+                    Email = usersToAdd.Email,
                     Address = usersToAdd.Address,
                     CreatedOn = usersToAdd.CreatedOn
                 };
@@ -100,9 +130,9 @@ namespace SocialApi.Controllers
 
                 var newUserDto = new UsersDto
                 {
-                    Id = usersDomainModel.Id,
+                    UserId = usersDomainModel.UserId,
                     Nickname = usersDomainModel.Nickname,
-                    Messages = usersDomainModel.Messages,
+                    Email = usersDomainModel.Email,
                     Address = usersDomainModel.Address,
                     CreatedOn = usersDomainModel.CreatedOn
 
@@ -110,7 +140,7 @@ namespace SocialApi.Controllers
 
                 newUserDto.CreatedOn = DateTime.Now;
 
-                return CreatedAtAction(nameof(GetUserById), new { id = newUserDto.Id }, newUserDto);
+                return CreatedAtAction(nameof(GetUserById), new { id = newUserDto.UserId }, newUserDto);
             }
             catch (Exception ex5)
             {
