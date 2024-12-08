@@ -1,12 +1,16 @@
-﻿namespace SocialApi.Models.DTO
+﻿using System.Numerics;
+
+namespace SocialApi.Models.DTO
 {
     public class AddRecordsRequestDto
     {
         private DateTime _created = DateTime.Now;
 
         public required string Path { get; set; }
-        public int Views { get; set; }
-        public int Likes { get; set; }
+        public string Views { get; set; }
+
+
+        public string Likes { get; set; }
         public bool IsNsfw { get; set; }
         public DateTime CreatedOn
         {
