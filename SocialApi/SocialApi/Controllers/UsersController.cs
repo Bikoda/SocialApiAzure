@@ -11,56 +11,54 @@ namespace SocialApi.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-
         private readonly WebSocialDbContext dbContext;
-
-
-
 
         public UsersController(WebSocialDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-
         [HttpGet]
         public IActionResult GetAllUsers()
         {
             try
-            { //Get Data From Database - Domain Models
+            {
+                // Retrieve data from the database
                 var records = dbContext.LogUser.ToList();
 
-                // Map Domain Models to DTOs
-                var recordDto = new List<UsersDto>();
-                foreach (var record in records) // Iterate through each record in the list
+                // Map domain models to DTOs
+                var recordDto = records.Select(record => new UsersDto
                 {
-                    recordDto.Add(new UsersDto()
-                    {
-                        UserId = record.UserId,               // Access the properties of the individual record
-                        Nickname = record.Nickname,
-                        Email = record.Email,
-                        Address = record.Address,
-                        CreatedOn = record.CreatedOn
-                    });
-                }
-                //Return DTO's
+                    UserId = record.UserId,
+                    Nickname = record.Nickname,
+                    Email = record.Email,
+                    Address = record.Address,
+                    CreatedOn = record.CreatedOn
+                }).ToList();
+
                 return Ok(recordDto);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, $"An error occurred: {ex.Message}");
             }
-
         }
 
-        [HttpGet]
-        [Route("{id:int}")]
-        public IActionResult GetUserById(int id)
+        [HttpGet("{id}")]
+        public IActionResult GetUserById(string id)
         {
-            //var toDb =  dbContext.LogRecord.Find(id);
             try
             {
-                var toDb = dbContext.LogUser.FirstOrDefault(x => x.UserId == id);
+                if (!long.TryParse(id, out var parsedId))
+                {
+                    return BadRequest($"Invalid UserId: {id}");
+                }
+
+                var toDb = dbContext.LogUser.FirstOrDefault(x => x.UserId == parsedId);
+                if (toDb == null)
+                {
+                    return NotFound($"No user found with UserId: {id}");
+                }
 
                 var userDto = new UsersDto
                 {
@@ -71,17 +69,15 @@ namespace SocialApi.Controllers
                     CreatedOn = toDb.CreatedOn
                 };
 
-
                 return Ok(userDto);
             }
-            catch (Exception ex2)
+            catch (Exception ex)
             {
-                return BadRequest(ex2.Message);
+                return StatusCode(500, $"An unexpected error occurred: {ex.Message}");
             }
         }
 
-        [HttpGet]
-        [Route("{address}")]
+        [HttpGet("by-address/{address}")]
         public IActionResult GetUserByAddress(string address)
         {
             try
@@ -105,7 +101,6 @@ namespace SocialApi.Controllers
             }
             catch (Exception ex)
             {
-                // Log exception here (e.g., using a logging framework like Serilog or NLog)
                 return StatusCode(500, "An unexpected error occurred. Please try again later.");
             }
         }
@@ -117,7 +112,6 @@ namespace SocialApi.Controllers
             {
                 var usersDomainModel = new Users
                 {
-
                     Nickname = usersToAdd.Nickname,
                     Email = usersToAdd.Email,
                     Address = usersToAdd.Address,
@@ -127,25 +121,22 @@ namespace SocialApi.Controllers
                 dbContext.Add(usersDomainModel);
                 dbContext.SaveChanges();
 
-
                 var newUserDto = new UsersDto
                 {
                     UserId = usersDomainModel.UserId,
                     Nickname = usersDomainModel.Nickname,
                     Email = usersDomainModel.Email,
                     Address = usersDomainModel.Address,
-                    CreatedOn = usersDomainModel.CreatedOn
-
+                    CreatedOn = DateTime.Now
                 };
-
-                newUserDto.CreatedOn = DateTime.Now;
 
                 return CreatedAtAction(nameof(GetUserById), new { id = newUserDto.UserId }, newUserDto);
             }
-            catch (Exception ex5)
+            catch (Exception ex)
             {
-                return BadRequest(ex5.Message);
+                return StatusCode(500, $"An error occurred while creating the user: {ex.Message}");
             }
         }
     }
 }
+  

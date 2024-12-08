@@ -348,8 +348,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
@@ -360,7 +359,7 @@
         }
       }
     },
-    "/api/Users/{address}": {
+    "/api/Users/by-address/{address}": {
       "get": {
         "tags": [
           "Users"
@@ -396,12 +395,12 @@
             "nullable": true
           },
           "views": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "nullable": true
           },
           "likes": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "nullable": true
           },
           "isNsfw": {
             "type": "boolean"
@@ -426,8 +425,7 @@
             "nullable": true
           },
           "recordId": {
-            "type": "integer",
-            "format": "int32",
+            "type": "string",
             "nullable": true
           },
           "createdOn": {

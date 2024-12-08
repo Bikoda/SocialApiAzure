@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Numerics;
 
 namespace SocialApi.Models.Domain
 {
@@ -6,10 +7,10 @@ namespace SocialApi.Models.Domain
     {
 
         [Key]
-        public int RecordId { get; set; }
-        public required string Path { get; set; }
-        public int Views { get; set; }
-        public int Likes { get; set; }
+        public long RecordId { get; set; }
+        public string Path { get; set; }
+        public long Views { get; set; }
+        public long Likes { get; set; }
         public bool IsNsfw { get; set; }
 
         public DateTime CreatedOn { get; set; }

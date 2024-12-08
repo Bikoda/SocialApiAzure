@@ -238,18 +238,29 @@ namespace SocialApi.Controllers
             }
         }
 
-
         [HttpPost]
         public IActionResult CreateRecord([FromBody] AddRecordsRequestDto recordsToAdd)
         {
             try
             {
+                // Parse Views
+                if (!long.TryParse(recordsToAdd.Views, out var parsedViews))
+                {
+                    return BadRequest($"Invalid value for Views: {recordsToAdd.Views}");
+                }
+
+                // Parse Likes
+                if (!long.TryParse(recordsToAdd.Likes, out var parsedLikes))
+                {
+                    return BadRequest($"Invalid value for Likes: {recordsToAdd.Likes}");
+                }
+
+                // Create the domain model
                 var recordsDomainModel = new Records
                 {
-
                     Path = recordsToAdd.Path,
-                    Views = recordsToAdd.Views,
-                    Likes = recordsToAdd.Likes,
+                    Views = parsedViews,
+                    Likes = parsedLikes,
                     IsNsfw = recordsToAdd.IsNsfw,
                     CreatedOn = recordsToAdd.CreatedOn
                 };
@@ -257,7 +268,7 @@ namespace SocialApi.Controllers
                 dbContext.Add(recordsDomainModel);
                 dbContext.SaveChanges();
 
-
+                // Create the DTO for the response
                 var newRecordsDto = new RecordsDto
                 {
                     RecordId = recordsDomainModel.RecordId,
@@ -265,19 +276,18 @@ namespace SocialApi.Controllers
                     Views = recordsDomainModel.Views,
                     Likes = recordsDomainModel.Likes,
                     IsNsfw = recordsDomainModel.IsNsfw,
-                    CreatedOn = recordsToAdd.CreatedOn
-
+                    CreatedOn = DateTime.Now // Use current timestamp for CreatedOn
                 };
-
-                newRecordsDto.CreatedOn = DateTime.Now;
 
                 return CreatedAtAction(nameof(GetById), new { id = newRecordsDto.RecordId }, newRecordsDto);
             }
-            catch (Exception ex5)
+            catch (Exception ex)
             {
-                return BadRequest(ex5.Message);
+                return BadRequest(ex.Message);
             }
         }
+
+       
 
         [HttpGet]
         [Route("{isNsfw:bool}")]

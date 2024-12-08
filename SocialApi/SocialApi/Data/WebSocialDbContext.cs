@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialApi.Models.Domain;
 using System.Collections.Generic;
+using System.Numerics;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace SocialApi.Data
 {
@@ -12,10 +15,14 @@ namespace SocialApi.Data
         }
 
 
+
+
         public DbSet<Users> LogUser { get; set; } // Existing DbSet for Users
-        public DbSet<UsersNft> UserNfts { get; set; } // Add this for UserNfts
 
         public DbSet<Records> LogRecord { get; set; }
+        public DbSet<UsersNft> UserNfts { get; set; } // Add this for UserNfts
+
+
 
 
 
@@ -25,17 +32,17 @@ namespace SocialApi.Data
             modelBuilder.Entity<UsersNft>()
                 .HasKey(un => un.UserRecordId);
 
-            // Configure User navigation
+            // Configure Users navigation property
             modelBuilder.Entity<UsersNft>()
                 .HasOne(un => un.User)
                 .WithMany(u => u.UserNfts)
                 .HasForeignKey(un => un.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Configure Record navigation
+            // Configure Records navigation property
             modelBuilder.Entity<UsersNft>()
-                .HasOne(un => un.Record) // Navigation property
-                .WithMany() // No reverse navigation from Records
+                .HasOne(un => un.Record)
+                .WithMany()
                 .HasForeignKey(un => un.RecordId)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -46,5 +53,5 @@ namespace SocialApi.Data
                 ? "Record navigation found."
                 : "Record navigation not found.");
         }
-    }
+    }    
 }

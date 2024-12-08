@@ -227,22 +227,6 @@
   },
   {
     "ContainingType": "SocialApi.Controllers.UsersController",
-    "Method": "GetUserByAddress",
-    "RelativePath": "api/Users/{address}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "address",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "SocialApi.Controllers.UsersController",
     "Method": "GetUserById",
     "RelativePath": "api/Users/{id}",
     "HttpMethod": "GET",
@@ -251,7 +235,23 @@
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.Int32",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SocialApi.Controllers.UsersController",
+    "Method": "GetUserByAddress",
+    "RelativePath": "api/Users/by-address/{address}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "address",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

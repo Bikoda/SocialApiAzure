@@ -515,3 +515,5 @@ C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\obj\Debu
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\obj\Debug\net8.0\SocialApi.genruntimeconfig.cache
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\obj\Debug\net8.0\ref\SocialApi.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Newtonsoft.Json.dll
