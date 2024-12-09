@@ -5,10 +5,10 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Records": {
+    "/api/Nfts": {
       "get": {
         "tags": [
-          "Records"
+          "Nfts"
         ],
         "responses": {
           "200": {
@@ -18,23 +18,23 @@
       },
       "post": {
         "tags": [
-          "Records"
+          "Nfts"
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AddRecordsRequestDto"
+                "$ref": "#/components/schemas/AddNftRequestDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AddRecordsRequestDto"
+                "$ref": "#/components/schemas/AddNftRequestDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AddRecordsRequestDto"
+                "$ref": "#/components/schemas/AddNftRequestDto"
               }
             }
           }
@@ -46,10 +46,10 @@
         }
       }
     },
-    "/api/Records/{id}": {
+    "/api/Nfts/{id}": {
       "get": {
         "tags": [
-          "Records"
+          "Nfts"
         ],
         "parameters": [
           {
@@ -69,10 +69,10 @@
         }
       }
     },
-    "/api/Records/page-records": {
+    "/api/Nfts/page-nfts": {
       "get": {
         "tags": [
-          "Records"
+          "Nfts"
         ],
         "parameters": [
           {
@@ -114,10 +114,10 @@
         }
       }
     },
-    "/api/Records/{isNsfw}": {
+    "/api/Nfts/{isNsfw}": {
       "get": {
         "tags": [
-          "Records"
+          "Nfts"
         ],
         "parameters": [
           {
@@ -136,10 +136,10 @@
         }
       }
     },
-    "/api/Records/{id}/add-like": {
+    "/api/Nfts/{id}/add-like": {
       "post": {
         "tags": [
-          "Records"
+          "Nfts"
         ],
         "parameters": [
           {
@@ -159,10 +159,10 @@
         }
       }
     },
-    "/api/Records/{id}/remove-like": {
+    "/api/Nfts/{id}/remove-like": {
       "post": {
         "tags": [
-          "Records"
+          "Nfts"
         ],
         "parameters": [
           {
@@ -182,10 +182,10 @@
         }
       }
     },
-    "/api/Records/{id}/add-view": {
+    "/api/Nfts/{id}/add-view": {
       "post": {
         "tags": [
-          "Records"
+          "Nfts"
         ],
         "parameters": [
           {
@@ -243,7 +243,7 @@
         ],
         "parameters": [
           {
-            "name": "address",
+            "name": "userAddress",
             "in": "query",
             "schema": {
               "type": "string"
@@ -320,14 +320,14 @@
         }
       }
     },
-    "/api/Users/by-address/{address}": {
+    "/api/Users/by-address/{userAddress}": {
       "get": {
         "tags": [
           "Users"
         ],
         "parameters": [
           {
-            "name": "address",
+            "name": "userAddress",
             "in": "path",
             "required": true,
             "schema": {
@@ -345,13 +345,13 @@
   },
   "components": {
     "schemas": {
-      "AddRecordsRequestDto": {
+      "AddNftRequestDto": {
         "required": [
-          "path"
+          "nftAddress"
         ],
         "type": "object",
         "properties": {
-          "path": {
+          "nftAddress": {
             "type": "string",
             "nullable": true
           },
@@ -377,15 +377,15 @@
       "AddUserNftRequestDto": {
         "type": "object",
         "properties": {
-          "address": {
+          "userAddress": {
             "type": "string",
             "nullable": true
           },
-          "path": {
+          "nftAddress": {
             "type": "string",
             "nullable": true
           },
-          "recordId": {
+          "nftId": {
             "type": "string",
             "nullable": true
           },
@@ -408,7 +408,7 @@
             "type": "string",
             "nullable": true
           },
-          "address": {
+          "userAddress": {
             "type": "string",
             "nullable": true
           },

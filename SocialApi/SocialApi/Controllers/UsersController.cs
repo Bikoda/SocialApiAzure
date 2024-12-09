@@ -24,7 +24,7 @@ namespace SocialApi.Controllers
             try
             {
                 // Retrieve data from the database
-                var records = dbContext.LogUser.ToList();
+                var records = dbContext.Users.ToList();
 
                 // Map domain models to DTOs
                 var recordDto = records.Select(record => new UsersDto
@@ -32,7 +32,7 @@ namespace SocialApi.Controllers
                     UserId = record.UserId,
                     Nickname = record.Nickname,
                     Email = record.Email,
-                    Address = record.Address,
+                    UserAddress = record.UserAddress,
                     CreatedOn = record.CreatedOn
                 }).ToList();
 
@@ -54,7 +54,7 @@ namespace SocialApi.Controllers
                     return BadRequest($"Invalid UserId: {id}");
                 }
 
-                var toDb = dbContext.LogUser.FirstOrDefault(x => x.UserId == parsedId);
+                var toDb = dbContext.Users.FirstOrDefault(x => x.UserId == parsedId);
                 if (toDb == null)
                 {
                     return NotFound($"No user found with UserId: {id}");
@@ -65,7 +65,7 @@ namespace SocialApi.Controllers
                     UserId = toDb.UserId,
                     Nickname = toDb.Nickname,
                     Email = toDb.Email,
-                    Address = toDb.Address,
+                    UserAddress = toDb.UserAddress,
                     CreatedOn = toDb.CreatedOn
                 };
 
@@ -77,15 +77,15 @@ namespace SocialApi.Controllers
             }
         }
 
-        [HttpGet("by-address/{address}")]
-        public IActionResult GetUserByAddress(string address)
+        [HttpGet("by-address/{userAddress}")]
+        public IActionResult GetUserByAddress(string userAddress)
         {
             try
             {
-                var toDb = dbContext.LogUser.FirstOrDefault(x => x.Address == address);
+                var toDb = dbContext.Users.FirstOrDefault(x => x.UserAddress == userAddress);
                 if (toDb == null)
                 {
-                    return NotFound($"No user found with address: {address}");
+                    return NotFound($"No user found with user address: {userAddress}");
                 }
 
                 var userDto = new UsersDto
@@ -93,7 +93,7 @@ namespace SocialApi.Controllers
                     UserId = toDb.UserId,
                     Nickname = toDb.Nickname,
                     Email = toDb.Email,
-                    Address = toDb.Address,
+                    UserAddress = toDb.UserAddress,
                     CreatedOn = toDb.CreatedOn
                 };
 
@@ -114,7 +114,7 @@ namespace SocialApi.Controllers
                 {
                     Nickname = usersToAdd.Nickname,
                     Email = usersToAdd.Email,
-                    Address = usersToAdd.Address,
+                    UserAddress = usersToAdd.UserAddress,
                     CreatedOn = usersToAdd.CreatedOn
                 };
 
@@ -126,7 +126,7 @@ namespace SocialApi.Controllers
                     UserId = usersDomainModel.UserId,
                     Nickname = usersDomainModel.Nickname,
                     Email = usersDomainModel.Email,
-                    Address = usersDomainModel.Address,
+                    UserAddress = usersDomainModel.UserAddress,
                     CreatedOn = DateTime.Now
                 };
 

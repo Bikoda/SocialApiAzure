@@ -15,18 +15,18 @@ namespace SocialApi.Models.DTO
 
         public required string Nickname { get; set; } // Ensures Nickname is always set.
         public required string Email { get; set; }    // Ensures Email is always set.
-        public required string Address { get; set; }  // Ensures Address is always set.
+        public required string UserAddress { get; set; }  // Ensures Address is always set.
         public DateTime CreatedOn { get; set; }
 
         // Constructor for initialization
-        public UsersDto(string userId, string nickname, string email, string address, DateTime createdOn)
+        public UsersDto(string userId, string nickname, string email, string userAddress, DateTime createdOn)
         {
             if (!long.TryParse(userId, out _userId))
                 throw new ArgumentException($"Invalid long value for {nameof(userId)}: {userId}");
 
             Nickname = nickname;
             Email = email;
-            Address = address;
+            UserAddress = userAddress;
             CreatedOn = createdOn;
         }
 

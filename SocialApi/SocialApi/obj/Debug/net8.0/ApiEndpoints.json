@@ -1,8 +1,8 @@
 [
   {
-    "ContainingType": "SocialApi.Controllers.RecordsController",
+    "ContainingType": "SocialApi.Controllers.NftsController",
     "Method": "GetAll",
-    "RelativePath": "api/Records",
+    "RelativePath": "api/Nfts",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -10,25 +10,25 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "SocialApi.Controllers.RecordsController",
-    "Method": "CreateRecord",
-    "RelativePath": "api/Records",
+    "ContainingType": "SocialApi.Controllers.NftsController",
+    "Method": "CreateNft",
+    "RelativePath": "api/Nfts",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "recordsToAdd",
-        "Type": "SocialApi.Models.DTO.AddRecordsRequestDto",
+        "Name": "nftToAdd",
+        "Type": "SocialApi.Models.DTO.AddNftRequestDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "SocialApi.Controllers.RecordsController",
+    "ContainingType": "SocialApi.Controllers.NftsController",
     "Method": "GetById",
-    "RelativePath": "api/Records/{id}",
+    "RelativePath": "api/Nfts/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -42,9 +42,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "SocialApi.Controllers.RecordsController",
+    "ContainingType": "SocialApi.Controllers.NftsController",
     "Method": "AddLike",
-    "RelativePath": "api/Records/{id}/add-like",
+    "RelativePath": "api/Nfts/{id}/add-like",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -58,9 +58,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "SocialApi.Controllers.RecordsController",
+    "ContainingType": "SocialApi.Controllers.NftsController",
     "Method": "AddView",
-    "RelativePath": "api/Records/{id}/add-view",
+    "RelativePath": "api/Nfts/{id}/add-view",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -74,9 +74,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "SocialApi.Controllers.RecordsController",
+    "ContainingType": "SocialApi.Controllers.NftsController",
     "Method": "RemoveLike",
-    "RelativePath": "api/Records/{id}/remove-like",
+    "RelativePath": "api/Nfts/{id}/remove-like",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -90,9 +90,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "SocialApi.Controllers.RecordsController",
+    "ContainingType": "SocialApi.Controllers.NftsController",
     "Method": "GetAllNsfw",
-    "RelativePath": "api/Records/{isNsfw}",
+    "RelativePath": "api/Nfts/{isNsfw}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -106,9 +106,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "SocialApi.Controllers.RecordsController",
-    "Method": "GetPageRecords",
-    "RelativePath": "api/Records/page-records",
+    "ContainingType": "SocialApi.Controllers.NftsController",
+    "Method": "GetPageNfts",
+    "RelativePath": "api/Nfts/page-nfts",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -145,7 +145,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "address",
+        "Name": "userAddress",
         "Type": "System.String",
         "IsRequired": false
       }
@@ -213,13 +213,13 @@
   {
     "ContainingType": "SocialApi.Controllers.UsersController",
     "Method": "GetUserByAddress",
-    "RelativePath": "api/Users/by-address/{address}",
+    "RelativePath": "api/Users/by-address/{userAddress}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "address",
+        "Name": "userAddress",
         "Type": "System.String",
         "IsRequired": true
       }

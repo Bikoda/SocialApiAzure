@@ -23,26 +23,26 @@ namespace SocialApi.Controllers
         [HttpPost("pair")]
         public async Task<IActionResult> PairUserWithRecord([FromBody] AddUserNftRequestDto dto)
         {
-            if (string.IsNullOrEmpty(dto.Address))
+            if (string.IsNullOrEmpty(dto.UserAddress))
                 return BadRequest("User address cannot be null or empty.");
 
-            if (string.IsNullOrEmpty(dto.Path) && string.IsNullOrEmpty(dto.RecordId))
+            if (string.IsNullOrEmpty(dto.NftAddress) && string.IsNullOrEmpty(dto.NftId))
                 return BadRequest("Either Record path or Record ID must be provided.");
 
             try
             {
                 // Find user
-                var user = await FindUserByAddressAsync(dto.Address);
+                var user = await FindUserByAddressAsync(dto.UserAddress);
                 if (user == null)
-                    return NotFound($"No user found with address: {dto.Address}");
+                    return NotFound($"No user found with address: {dto.UserAddress}");
 
                 // Find record
-                var record = await FindRecordByIdOrPathAsync(dto.RecordId, dto.Path);
-                if (record == null)
-                    return NotFound($"No record found with the given {(string.IsNullOrEmpty(dto.RecordId) ? "Path" : "RecordId")}.");
+                var nft = await FindRecordByIdOrPathAsync(dto.NftId, dto.NftAddress);
+                if (nft == null)
+                    return NotFound($"No record found with the given {(string.IsNullOrEmpty(dto.NftId) ? "NftAddress" : "NftId")}.");
 
                 // Check and unpair existing NFT
-                var existingPairing = await _context.UserNfts.SingleOrDefaultAsync(un => un.RecordId == record.RecordId);
+                var existingPairing = await _context.UserNfts.SingleOrDefaultAsync(un => un.NftId == nft.NftId);
                 if (existingPairing != null)
                     _context.UserNfts.Remove(existingPairing);
 
@@ -50,14 +50,14 @@ namespace SocialApi.Controllers
                 var userNft = new UsersNft
                 {
                     UserId = user.UserId,
-                    RecordId = record.RecordId,
+                    NftId = nft.NftId,
                     CreatedOn = DateTime.UtcNow
                 };
 
                 _context.UserNfts.Add(userNft);
                 await _context.SaveChangesAsync();
 
-                return Ok(new { Message = "NFT paired successfully.", UserNftId = userNft.UserRecordId });
+                return Ok(new { Message = "NFT paired successfully.", UserNftId = userNft.UserNftId });
             }
             catch (Exception ex)
             {
@@ -66,28 +66,28 @@ namespace SocialApi.Controllers
         }
 
         [HttpGet("get-paired-nfts")]
-        public async Task<IActionResult> GetPairedNfts([FromQuery] string address)
+        public async Task<IActionResult> GetPairedNfts([FromQuery] string userAddress)
         {
-            if (string.IsNullOrEmpty(address))
+            if (string.IsNullOrEmpty(userAddress))
                 return BadRequest("User address cannot be null or empty.");
 
             try
             {
                 // Find user
-                var user = await FindUserByAddressAsync(address);
+                var user = await FindUserByAddressAsync(userAddress);
                 if (user == null)
-                    return NotFound($"No user found with address: {address}");
+                    return NotFound($"No user found with address: {userAddress}");
 
                 // Fetch paired NFTs
                 var pairedNfts = await _context.UserNfts
                     .Where(un => un.UserId == user.UserId)
-                    .Join(_context.LogRecord,
-                          un => un.RecordId,
-                          record => record.RecordId,
-                          (un, record) => new
+                    .Join(_context.Nfts,
+                          un => un.NftId,
+                          nft => nft.NftId,
+                          (un, nft) => new
                           {
-                              RecordId = record.RecordId,
-                              Path = record.Path
+                              NftId = nft.NftId,
+                              NftAddress = nft.NftAddress
                           })
                     .ToListAsync();
 
@@ -102,21 +102,21 @@ namespace SocialApi.Controllers
         // Private helper methods
 
 
-        private async Task<Users> FindUserByAddressAsync(string address)
+        private async Task<Users> FindUserByAddressAsync(string userAddress)
         {
-            return await _context.LogUser.SingleOrDefaultAsync(u => u.Address == address);
+            return await _context.Users.SingleOrDefaultAsync(u => u.UserAddress == userAddress);
         }
 
-        private async Task<Records> FindRecordByIdOrPathAsync(string? recordId, string? path)
+        private async Task<Nfts> FindRecordByIdOrPathAsync(string? nftId, string? nftAddress)
         {
-            if (!string.IsNullOrEmpty(recordId) && long.TryParse(recordId, out var parsedRecordId))
+            if (!string.IsNullOrEmpty(nftId) && long.TryParse(nftId, out var parsedNftId))
             {
-                return await _context.LogRecord.SingleOrDefaultAsync(r => r.RecordId == parsedRecordId);
+                return await _context.Nfts.SingleOrDefaultAsync(r => r.NftId == parsedNftId);
             }
 
-            if (!string.IsNullOrEmpty(path))
+            if (!string.IsNullOrEmpty(nftAddress))
             {
-                return await _context.LogRecord.SingleOrDefaultAsync(r => r.Path == path);
+                return await _context.Nfts.SingleOrDefaultAsync(r => r.NftAddress == nftAddress);
             }
 
             return null;

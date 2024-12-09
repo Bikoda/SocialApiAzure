@@ -3,19 +3,19 @@
 namespace SocialApi.Models.DTO
 {
 
-    public class RecordsDto
+    public class NftDto
     {
-        private long _recordId;
+        private long _nftId;
         private long _views;
         private long _likes;
 
-        public long RecordId
+        public long NftId
         {
-            get => _recordId;
-            set => _recordId = value;
+            get => _nftId;
+            set => _nftId = value;
         }
 
-        public required string Path { get; set; } 
+        public required string NftAddress { get; set; } 
 
         public long Views
         {
@@ -33,12 +33,12 @@ namespace SocialApi.Models.DTO
         public DateTime CreatedOn { get; set; }
 
         // Constructor for initialization
-        public RecordsDto(string recordId, string path, string views, string likes, bool isNsfw, DateTime createdOn)
+        public NftDto(string nftId, string nftAddress, string views, string likes, bool isNsfw, DateTime createdOn)
         {
-            if (!long.TryParse(recordId, out _recordId))
-                throw new ArgumentException($"Invalid long value for {nameof(recordId)}: {recordId}");
+            if (!long.TryParse(nftId, out _nftId))
+                throw new ArgumentException($"Invalid long value for {nameof(nftId)}: {nftId}");
 
-            Path = path;
+            NftAddress = nftAddress;
 
             if (!long.TryParse(views, out _views))
                 throw new ArgumentException($"Invalid long value for {nameof(views)}: {views}");
@@ -51,6 +51,6 @@ namespace SocialApi.Models.DTO
         }
 
         // Parameterless constructor (required for deserialization)
-        public RecordsDto() { }
+        public NftDto() { }
     }
 }

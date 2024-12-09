@@ -7,16 +7,16 @@ namespace SocialApi.Models.Domain
     public class UsersNft
     {
         [Key]
-        public long UserRecordId { get; set; }
+        public long UserNftId { get; set; }
 
         public long UserId { get; set; }
 
-        public long RecordId { get; set; }
+        public long NftId { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
         // Navigation properties
         public Users User { get; set; }
-        public Records Record { get; set; }
+        public Nfts Nft { get; set; }
     }
 }
