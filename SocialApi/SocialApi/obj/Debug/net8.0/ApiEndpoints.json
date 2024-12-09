@@ -107,8 +107,8 @@
   },
   {
     "ContainingType": "SocialApi.Controllers.RecordsController",
-    "Method": "GetPageLiked",
-    "RelativePath": "api/Records/page-likes",
+    "Method": "GetPageRecords",
+    "RelativePath": "api/Records/page-records",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -122,49 +122,18 @@
         "Name": "pageSize",
         "Type": "System.Int32",
         "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "SocialApi.Controllers.RecordsController",
-    "Method": "GetPageViewed",
-    "RelativePath": "api/Records/page-views",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
+      },
       {
-        "Name": "page",
-        "Type": "System.Int32",
+        "Name": "orderBy",
+        "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "pageSize",
-        "Type": "System.Int32",
+        "Name": "isNsfw",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "SocialApi.Controllers.RecordsController",
-    "Method": "GetTopLiked",
-    "RelativePath": "api/Records/top-likes",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "SocialApi.Controllers.RecordsController",
-    "Method": "GetTopViewed",
-    "RelativePath": "api/Records/top-views",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
     "ReturnTypes": []
   },
   {

@@ -51,6 +51,9 @@ namespace SocialApi.Controllers
 
         }
 
+
+        
+
         [HttpGet]
         [Route("{id:int}")]
         public IActionResult GetById(int id)
@@ -78,67 +81,10 @@ namespace SocialApi.Controllers
                 return BadRequest(ex2.Message);
             }
         }
-        [HttpGet]
-        [Route("top-views")]
-        public IActionResult GetTopViewed()
-        {
-            try
-            {
-                var topItems = dbContext.LogRecord
-                    .OrderByDescending(x => x.Views) // Order by Views in descending order
-                    .Take(50) // Take the top 50 items
-                    .Select(x => new RecordsDto
-                    {
-                        RecordId = x.RecordId,
-                        Path = x.Path,
-                        Views = x.Views,
-                        Likes = x.Likes,
-                        IsNsfw = x.IsNsfw,
-                        CreatedOn = x.CreatedOn
-                    })
-                    .ToList(); // Convert the result to a list
-
-                return Ok(topItems); // Return the result
-            }
-            catch (Exception ex3)
-            {
-                return BadRequest(ex3.Message); // Handle any exceptions
-            }
-        }
-
 
         [HttpGet]
-        [Route("top-likes")]
-        public IActionResult GetTopLiked()
-        {
-            try
-            {
-                var topItems = dbContext.LogRecord
-                    .OrderByDescending(x => x.Likes) // Order by Views in descending order
-                    .Take(50) // Take the top 50 items
-                    .Select(x => new RecordsDto
-                    {
-                        RecordId = x.RecordId,
-                        Path = x.Path,
-                        Views = x.Views,
-                        Likes = x.Likes,
-                        IsNsfw = x.IsNsfw,
-                        CreatedOn = x.CreatedOn
-                    })
-                    .ToList(); // Convert the result to a list
-
-                return Ok(topItems); // Return the result
-            }
-            catch (Exception ex4)
-            {
-                return BadRequest(ex4.Message); // Handle any exceptions
-            }
-        }
-
-
-        [HttpGet]
-        [Route("page-likes")]
-        public IActionResult GetPageLiked(int page, int pageSize)
+        [Route("page-records")]
+        public IActionResult GetPageRecords(int page, int pageSize, string orderBy = "Likes", bool? isNsfw = null)
         {
             try
             {
@@ -147,15 +93,46 @@ namespace SocialApi.Controllers
                     return BadRequest("Invalid input: 'page' must be 0 or greater, and 'pageSize' must be greater than 0.");
                 }
 
-                int total = dbContext.LogRecord.Count(); // Total number of records
+                // Validate orderBy parameter
+                if (orderBy != "Likes" && orderBy != "Views" && orderBy != "CreatedOn")
+                {
+                    return BadRequest("Invalid input: 'orderBy' must be 'Likes', 'Views', or 'CreatedOn'.");
+                }
+
+                // Base query
+                var recordsQuery = dbContext.LogRecord.AsQueryable();
+
+                // Apply filtering for IsNsfw if provided
+                if (isNsfw.HasValue)
+                {
+                    recordsQuery = recordsQuery.Where(x => x.IsNsfw == isNsfw.Value);
+                }
+
+                // Dynamic ordering based on the orderBy parameter
+                switch (orderBy)
+                {
+                    case "Likes":
+                        recordsQuery = recordsQuery.OrderByDescending(x => x.Likes);
+                        break;
+
+                    case "Views":
+                        recordsQuery = recordsQuery.OrderByDescending(x => x.Views);
+                        break;
+
+                    case "CreatedOn":
+                        recordsQuery = recordsQuery.OrderByDescending(x => x.CreatedOn);
+                        break;
+                }
+
+                // Total number of filtered records
+                int total = recordsQuery.Count();
                 int totalPages = (int)Math.Ceiling(total / (double)pageSize); // Calculate total pages
 
                 // Calculate the starting index for the page
                 int skip = page * pageSize;
 
-                // Get the requested page of items
-                var records = dbContext.LogRecord
-                    .OrderByDescending(x => x.Likes) // Order by Likes in descending order
+                // Apply pagination and projection
+                var records = recordsQuery
                     .Skip(skip) // Skip items for previous pages
                     .Take(pageSize) // Take items for the current page
                     .Select(x => new
@@ -176,7 +153,7 @@ namespace SocialApi.Controllers
                     From = skip + 1, // First item index of this page
                     To = Math.Min(skip + records.Count, total), // Last item index of this page
                     Total = total, // Total number of records
-                    Pages = totalPages - 1// Total number of pages
+                    Pages = totalPages - 1 // Total number of pages
                 };
 
                 return Ok(result); // Return the result object
@@ -186,10 +163,10 @@ namespace SocialApi.Controllers
                 return BadRequest(ex.Message); // Handle any exceptions
             }
         }
-
+        /*
         [HttpGet]
-        [Route("page-views")]
-        public IActionResult GetPageViewed(int page, int pageSize)
+        [Route("page-records")]
+        public IActionResult GetPageRecords(int page, int pageSize, string orderBy = "Likes")
         {
             try
             {
@@ -198,15 +175,40 @@ namespace SocialApi.Controllers
                     return BadRequest("Invalid input: 'page' must be 0 or greater, and 'pageSize' must be greater than 0.");
                 }
 
-                int total = dbContext.LogRecord.Count(); // Total number of records
+                // Validate orderBy parameter
+                if (orderBy != "Likes" && orderBy != "Views" && orderBy != "CreatedOn")
+                {
+                    return BadRequest("Invalid input: 'orderBy' must be 'Likes', 'Views', or 'CreatedOn'.");
+                }
+
+                // Total number of records
+                int total = dbContext.LogRecord.Count();
                 int totalPages = (int)Math.Ceiling(total / (double)pageSize); // Calculate total pages
 
                 // Calculate the starting index for the page
                 int skip = page * pageSize;
 
-                // Get the requested page of items
-                var records = dbContext.LogRecord
-                    .OrderByDescending(x => x.Views) // Order by Likes in descending order
+                // Base query
+                var recordsQuery = dbContext.LogRecord.AsQueryable();
+
+                // Dynamic ordering based on the orderBy parameter
+                switch (orderBy)
+                {
+                    case "Likes":
+                        recordsQuery = recordsQuery.OrderByDescending(x => x.Likes);
+                        break;
+
+                    case "Views":
+                        recordsQuery = recordsQuery.OrderByDescending(x => x.Views);
+                        break;
+
+                    case "CreatedOn":
+                        recordsQuery = recordsQuery.OrderByDescending(x => x.CreatedOn);
+                        break;
+                }
+
+                // Apply pagination and projection
+                var records = recordsQuery
                     .Skip(skip) // Skip items for previous pages
                     .Take(pageSize) // Take items for the current page
                     .Select(x => new
@@ -227,7 +229,7 @@ namespace SocialApi.Controllers
                     From = skip + 1, // First item index of this page
                     To = Math.Min(skip + records.Count, total), // Last item index of this page
                     Total = total, // Total number of records
-                    Pages = totalPages - 1// Total number of pages
+                    Pages = totalPages - 1 // Total number of pages
                 };
 
                 return Ok(result); // Return the result object
@@ -236,7 +238,8 @@ namespace SocialApi.Controllers
             {
                 return BadRequest(ex.Message); // Handle any exceptions
             }
-        }
+        }*/
+
 
         [HttpPost]
         public IActionResult CreateRecord([FromBody] AddRecordsRequestDto recordsToAdd)
@@ -288,7 +291,6 @@ namespace SocialApi.Controllers
         }
 
        
-
         [HttpGet]
         [Route("{isNsfw:bool}")]
         public IActionResult GetAllNsfw(bool isNsfw)
