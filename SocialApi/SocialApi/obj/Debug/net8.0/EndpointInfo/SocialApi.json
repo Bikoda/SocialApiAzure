@@ -69,31 +69,7 @@
         }
       }
     },
-    "/api/Records/top-views": {
-      "get": {
-        "tags": [
-          "Records"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Records/top-likes": {
-      "get": {
-        "tags": [
-          "Records"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Records/page-likes": {
+    "/api/Records/page-records": {
       "get": {
         "tags": [
           "Records"
@@ -114,35 +90,20 @@
               "type": "integer",
               "format": "int32"
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Records/page-views": {
-      "get": {
-        "tags": [
-          "Records"
-        ],
-        "parameters": [
+          },
           {
-            "name": "page",
+            "name": "orderBy",
             "in": "query",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string",
+              "default": "Likes"
             }
           },
           {
-            "name": "pageSize",
+            "name": "isNsfw",
             "in": "query",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "boolean"
             }
           }
         ],
