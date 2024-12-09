@@ -2,11 +2,11 @@
 
 namespace SocialApi.Models.DTO
 {
-    public class AddRecordsRequestDto
+    public class AddNftRequestDto
     {
         private DateTime _created = DateTime.Now;
 
-        public required string Path { get; set; }
+        public required string NftAddress { get; set; }
         public string Views { get; set; }
 
 

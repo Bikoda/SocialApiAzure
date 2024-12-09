@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SocialApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+86ad0d71be042f67d9cd0d1537cf7d3a97100e6a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b2ee87d3cb803ac15eebcb22757345e0205d3583")]
 [assembly: System.Reflection.AssemblyProductAttribute("SocialApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SocialApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

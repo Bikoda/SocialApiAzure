@@ -17,9 +17,9 @@ namespace SocialApi.Data
 
 
 
-        public DbSet<Users> LogUser { get; set; } // Existing DbSet for Users
+        public DbSet<Users> Users { get; set; } // Existing DbSet for Users
 
-        public DbSet<Records> LogRecord { get; set; }
+        public DbSet<Nfts> Nfts { get; set; }
         public DbSet<UsersNft> UserNfts { get; set; } // Add this for UserNfts
 
 
@@ -30,7 +30,7 @@ namespace SocialApi.Data
         {
             // Configure UsersNft primary key
             modelBuilder.Entity<UsersNft>()
-                .HasKey(un => un.UserRecordId);
+                .HasKey(un => un.UserNftId);
 
             // Configure Users navigation property
             modelBuilder.Entity<UsersNft>()
@@ -41,17 +41,17 @@ namespace SocialApi.Data
 
             // Configure Records navigation property
             modelBuilder.Entity<UsersNft>()
-                .HasOne(un => un.Record)
+                .HasOne(un => un.Nft)
                 .WithMany()
-                .HasForeignKey(un => un.RecordId)
+                .HasForeignKey(un => un.NftId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
 
             var usersNftEntity = modelBuilder.Model.FindEntityType(typeof(UsersNft));
-            Console.WriteLine(usersNftEntity?.FindNavigation("Record") != null
-                ? "Record navigation found."
-                : "Record navigation not found.");
+            Console.WriteLine(usersNftEntity?.FindNavigation("Nft") != null
+                ? "Nft navigation found."
+                : "Nft navigation not found.");
         }
     }    
 }

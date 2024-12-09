@@ -23,13 +23,13 @@ namespace SocialApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SocialApi.Models.Domain.Records", b =>
+            modelBuilder.Entity("SocialApi.Models.Domain.Nfts", b =>
                 {
-                    b.Property<BigInteger>("RecordId")
+                    b.Property<BigInteger>("NftId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("long");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<BigInteger>("RecordId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<BigInteger>("NftId"));
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -40,16 +40,16 @@ namespace SocialApi.Migrations
                     b.Property<BigInteger>("Likes")
                         .HasColumnType("long");
 
-                    b.Property<string>("Path")
+                    b.Property<string>("NftAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<BigInteger>("Views")
                         .HasColumnType("long");
 
-                    b.HasKey("RecordId");
+                    b.HasKey("NftId");
 
-                    b.ToTable("LogRecord");
+                    b.ToTable("Nfts");
                 });
 
             modelBuilder.Entity("SocialApi.Models.Domain.Users", b =>
@@ -60,7 +60,7 @@ namespace SocialApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<BigInteger>("UserId"));
 
-                    b.Property<string>("Address")
+                    b.Property<string>("UserAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -81,24 +81,24 @@ namespace SocialApi.Migrations
 
             modelBuilder.Entity("SocialApi.Models.Domain.UsersNft", b =>
                 {
-                    b.Property<BigInteger>("UserRecordId")
+                    b.Property<BigInteger>("UserNftId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("long");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<BigInteger>("UserRecordId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<BigInteger>("UserNftId"));
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<BigInteger>("RecordId")
+                    b.Property<BigInteger>("NftId")
                         .HasColumnType("long");
 
                     b.Property<BigInteger>("UserId")
                         .HasColumnType("long");
 
-                    b.HasKey("UserRecordId");
+                    b.HasKey("UserNftId");
 
-                    b.HasIndex("RecordId");
+                    b.HasIndex("NftId");
 
                     b.HasIndex("UserId");
 
@@ -107,9 +107,9 @@ namespace SocialApi.Migrations
 
             modelBuilder.Entity("SocialApi.Models.Domain.UsersNft", b =>
                 {
-                    b.HasOne("SocialApi.Models.Domain.Records", "Record")
+                    b.HasOne("SocialApi.Models.Domain.Nfts", "Nft")
                         .WithMany()
-                        .HasForeignKey("RecordId")
+                        .HasForeignKey("NftId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -119,7 +119,7 @@ namespace SocialApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Record");
+                    b.Navigation("Nfts");
 
                     b.Navigation("User");
                 });

@@ -7,9 +7,9 @@ namespace SocialApi.Models.DTO
 
         private DateTime _created = DateTime.UtcNow;
 
-        public string Address { get; set; }
-        public string Path { get; set; }
-        public string? RecordId { get; set; }
+        public string UserAddress { get; set; }
+        public string NftAddress { get; set; }
+        public string? NftId { get; set; }
 
         public DateTime CreatedOn
         {
