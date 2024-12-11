@@ -1,30 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialApi.Models.Domain;
-using System.Collections.Generic;
-using System.Numerics;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SocialApi.Data
 {
-    public class WebSocialDbContext : DbContext
+    public class WebSocialDbContext : DbContext, IWebSocialDbContext
     {
         public WebSocialDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
-
         }
 
+        public virtual DbSet<Users> Users { get; set; } // Marked virtual for mocking
+        public virtual DbSet<Nfts> Nfts { get; set; } // Marked virtual for mocking
+        public virtual DbSet<UsersNft> UserNfts { get; set; } // Marked virtual for mocking
 
-
-
-        public DbSet<Users> Users { get; set; } // Existing DbSet for Users
-
-        public DbSet<Nfts> Nfts { get; set; }
-        public DbSet<UsersNft> UserNfts { get; set; } // Add this for UserNfts
-
-
-
-
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return base.SaveChangesAsync(cancellationToken);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,11 +41,14 @@ namespace SocialApi.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
-
-            var usersNftEntity = modelBuilder.Model.FindEntityType(typeof(UsersNft));
-            Console.WriteLine(usersNftEntity?.FindNavigation("Nft") != null
-                ? "Nft navigation found."
-                : "Nft navigation not found.");
         }
-    }    
+    }
+
+    public interface IWebSocialDbContext
+    {
+        DbSet<Users> Users { get; }
+        DbSet<Nfts> Nfts { get; }
+        DbSet<UsersNft> UserNfts { get; }
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    }
 }

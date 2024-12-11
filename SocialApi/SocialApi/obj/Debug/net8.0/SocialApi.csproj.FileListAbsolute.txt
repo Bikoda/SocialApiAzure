@@ -350,9 +350,14 @@ C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debu
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\SocialApi.runtimeconfig.json
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\SocialApi.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\SocialApi.pdb
+C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\AutoMapper.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Azure.Core.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Azure.Identity.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Humanizer.dll
+C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.Build.Locator.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
@@ -373,6 +378,8 @@ C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debu
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
@@ -389,6 +396,7 @@ C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debu
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Mono.TextTemplating.dll
+C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -515,5 +523,8 @@ C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\obj\Debu
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\obj\Debug\net8.0\SocialApi.genruntimeconfig.cache
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\obj\Debug\net8.0\ref\SocialApi.dll
 C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
-C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\AutoMapper.dll
-C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Castle.Core.dll
+C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\Moq.dll
+C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\xunit.abstractions.dll
+C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\xunit.assert.dll
+C:\Users\bikod\OneDrive\Desktop\Prod\SocialApiAzure\SocialApi\SocialApi\bin\Debug\net8.0\xunit.core.dll

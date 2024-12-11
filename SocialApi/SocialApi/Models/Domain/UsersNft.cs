@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Numerics;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SocialApi.Models.Domain
 {

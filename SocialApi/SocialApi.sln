@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35514.174 d17.12
+VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialApi", "SocialApi\SocialApi.csproj", "{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialApi.Tests", "SocialApi.Tests\SocialApi.Tests.csproj", "{416DA2DF-1AA4-4AFF-AC54-A0AA303F53C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{991AF36E-ECCC-4E93-94C4-A34679AF1E1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{416DA2DF-1AA4-4AFF-AC54-A0AA303F53C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{416DA2DF-1AA4-4AFF-AC54-A0AA303F53C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{416DA2DF-1AA4-4AFF-AC54-A0AA303F53C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{416DA2DF-1AA4-4AFF-AC54-A0AA303F53C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

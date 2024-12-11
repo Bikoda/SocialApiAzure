@@ -23,22 +23,16 @@ namespace SocialApi.Models.DTO
 
         public DateTime CreatedOn { get; set; }
 
+        public string NftAddress { get; set; }  // Add NftAddress property here
+
         // Constructor for initialization
-        public UsersNftDto(string userNftId, string userId, string nftId, DateTime createdOn)
+        public UsersNftDto(long userNftId, long userId, long nftId, DateTime createdOn, string nftAddress)
         {
-            if (!long.TryParse(userNftId, out var parsedUserNftId))
-                throw new ArgumentException($"Invalid long value for {nameof(userNftId)}: {userNftId}");
-            UserNftId = parsedUserNftId;
-
-            if (!long.TryParse(userId, out var parsedUserId))
-                throw new ArgumentException($"Invalid long value for {nameof(userId)}: {userId}");
-            UserId = parsedUserId;
-
-            if (!long.TryParse(nftId, out var parsedNftId))
-                throw new ArgumentException($"Invalid long value for {nameof(nftId)}: {nftId}");
-            NftId = parsedNftId;
-
+            UserNftId = userNftId;
+            UserId = userId;
+            NftId = nftId;
             CreatedOn = createdOn;
+            NftAddress = nftAddress;  // Initialize NftAddress
         }
 
         // Parameterless constructor (required for deserialization)
