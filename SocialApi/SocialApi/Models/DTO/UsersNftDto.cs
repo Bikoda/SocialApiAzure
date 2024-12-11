@@ -15,6 +15,8 @@ namespace SocialApi.Models.DTO
         [ForeignKey(nameof(User))]
         public long UserId { get; set; }
 
+        // Required navigation property for User
+        [Required]
         public Users User { get; set; } // Navigation property for User
 
         // Foreign key for Nft
@@ -23,7 +25,9 @@ namespace SocialApi.Models.DTO
 
         public DateTime CreatedOn { get; set; }
 
-        public string NftAddress { get; set; }  // Add NftAddress property here
+        // Required property for NftAddress
+        [Required]
+        public string NftAddress { get; set; }
 
         // Constructor for initialization
         public UsersNftDto(long userNftId, long userId, long nftId, DateTime createdOn, string nftAddress)
@@ -32,7 +36,7 @@ namespace SocialApi.Models.DTO
             UserId = userId;
             NftId = nftId;
             CreatedOn = createdOn;
-            NftAddress = nftAddress;  // Initialize NftAddress
+            NftAddress = nftAddress ?? throw new ArgumentNullException(nameof(nftAddress), "NftAddress cannot be null.");  // Ensure NftAddress is not null
         }
 
         // Parameterless constructor (required for deserialization)

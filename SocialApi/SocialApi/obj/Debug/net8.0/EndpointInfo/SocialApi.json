@@ -396,15 +396,19 @@
         "additionalProperties": false
       },
       "AddUserNftRequestDto": {
+        "required": [
+          "nftAddress",
+          "userAddress"
+        ],
         "type": "object",
         "properties": {
           "userAddress": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "nftAddress": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "nftId": {
             "type": "string",
@@ -419,6 +423,10 @@
         "additionalProperties": false
       },
       "AddUsersRequestDto": {
+        "required": [
+          "email",
+          "userAddress"
+        ],
         "type": "object",
         "properties": {
           "nickname": {
@@ -426,12 +434,13 @@
             "nullable": true
           },
           "email": {
+            "minLength": 1,
             "type": "string",
-            "nullable": true
+            "format": "email"
           },
           "userAddress": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "createdOn": {
             "type": "string",
