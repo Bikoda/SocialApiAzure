@@ -1,20 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SocialApi.Models.Domain;
 using SocialApi.Data;
+using SocialApi.Models.Domain;
 using SocialApi.Models.DTO;
-using Microsoft.AspNetCore.Authorization;
 
 namespace SocialApi.Controllers
 {
-    
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class UserNftsController : ControllerBase
     {
-        
-
         private readonly WebSocialDbContext _context;
 
         public UserNftsController(WebSocialDbContext context)
@@ -22,6 +19,7 @@ namespace SocialApi.Controllers
             _context = context;
         }
 
+        // Pair user with NFT
         [HttpPost("pair")]
         public async Task<IActionResult> PairUserWithNft([FromBody] AddUserNftRequestDto dto)
         {
@@ -38,17 +36,17 @@ namespace SocialApi.Controllers
                 if (user == null)
                     return NotFound($"No user found with address: {dto.UserAddress}");
 
-                // Find record
+                // Find NFT by ID or address
                 var nft = await FindRecordByIdOrPathAsync(dto.NftId, dto.NftAddress);
                 if (nft == null)
                     return NotFound($"No record found with the given {(string.IsNullOrEmpty(dto.NftId) ? "NftAddress" : "NftId")}.");
 
-                // Check and unpair existing NFT
+                // Check for existing pairing and remove if exists
                 var existingPairing = await _context.UserNfts.SingleOrDefaultAsync(un => un.NftId == nft.NftId);
                 if (existingPairing != null)
                     _context.UserNfts.Remove(existingPairing);
 
-                // Pair new NFT
+                // Create new pairing
                 var userNft = new UsersNft
                 {
                     UserId = user.UserId,
@@ -64,10 +62,11 @@ namespace SocialApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred: {ex.Message}");
+                return StatusCode(500, $"An error occurred while pairing: {ex.Message}");
             }
         }
 
+        // Get paired NFTs for a user
         [HttpGet("get-paired-nfts")]
         public async Task<IActionResult> GetPairedNfts([FromQuery] string userAddress)
         {
@@ -76,36 +75,34 @@ namespace SocialApi.Controllers
 
             try
             {
-                // Find user
+                // Find user by address
                 var user = await FindUserByAddressAsync(userAddress);
                 if (user == null)
                     return NotFound($"No user found with address: {userAddress}");
 
-                // Fetch paired NFTs
+                // Fetch paired NFTs using join
                 var pairedNfts = await _context.UserNfts
                     .Where(un => un.UserId == user.UserId)
                     .Join(_context.Nfts,
-                          un => un.NftId,
-                          nft => nft.NftId,
-                          (un, nft) => new UsersNftDto(
-                              un.UserNftId,
-                              un.UserId,
-                              nft.NftId,
-                              un.CreatedOn,
-                              nft.NftAddress // Pass the NftAddress from Nfts table
-                          ))
+                        un => un.NftId,
+                        nft => nft.NftId,
+                        (un, nft) => new UsersNftDto(
+                            un.UserNftId,
+                            un.UserId,
+                            nft.NftId,
+                            un.CreatedOn,
+                            nft.NftAddress)) // Include NftAddress
                     .ToListAsync();
 
                 return Ok(pairedNfts);
             }
-            catch (Exception ex1)
+            catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred: {ex1.Message}");
+                return StatusCode(500, $"An error occurred while fetching paired NFTs: {ex.Message}");
             }
         }
-        // Private helper methods
 
-
+        // Private helper methods for finding user and NFT
         private async Task<Users> FindUserByAddressAsync(string userAddress)
         {
             return await _context.Users.SingleOrDefaultAsync(u => u.UserAddress == userAddress);
@@ -127,4 +124,3 @@ namespace SocialApi.Controllers
         }
     }
 }
-    

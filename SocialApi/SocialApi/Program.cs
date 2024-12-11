@@ -6,7 +6,6 @@ using Microsoft.OpenApi.Models;
 using SocialApi.Data;
 using System.Text;
 
-
 namespace SocialApi
 {
     public class Program
@@ -38,22 +37,22 @@ namespace SocialApi
                 });
 
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
                 {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = JwtBearerDefaults.AuthenticationScheme
-                },
-                Scheme = "Bearer",
-                Name = JwtBearerDefaults.AuthenticationScheme,
-                In = ParameterLocation.Header
-            },
-            new List<string>()
-        }
-    });
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = JwtBearerDefaults.AuthenticationScheme
+                            },
+                            Scheme = "Bearer",
+                            Name = JwtBearerDefaults.AuthenticationScheme,
+                            In = ParameterLocation.Header
+                        },
+                        new List<string>()
+                    }
+                });
             });
 
             // Add CORS policy
@@ -73,7 +72,16 @@ namespace SocialApi
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
-                var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]); // Ensure this is not null
+                var key = builder.Configuration["Jwt:Key"];
+
+                // Check if the key is null or empty and handle the case
+                if (string.IsNullOrEmpty(key))
+                {
+                    throw new InvalidOperationException("JWT Key is not configured properly in app settings.");
+                }
+
+                var keyBytes = Encoding.UTF8.GetBytes(key);
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
@@ -82,7 +90,7 @@ namespace SocialApi
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = builder.Configuration["Jwt:Issuer"],
                     ValidAudience = builder.Configuration["Jwt:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                    IssuerSigningKey = new SymmetricSecurityKey(keyBytes)
                 };
             });
 
@@ -105,4 +113,3 @@ namespace SocialApi
         }
     }
 }
-       

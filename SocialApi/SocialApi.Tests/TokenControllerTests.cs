@@ -35,8 +35,12 @@ namespace SocialApi.Tests
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var tokenResponse = Assert.IsType<TokenResponseDto>(okResult.Value);  // Expect TokenResponseDto
+            var tokenResponse = Assert.IsType<TokenResponseDto>(okResult.Value);
             Assert.NotNull(tokenResponse.Token);  // Ensure token is returned
+
+            // Verify if the returned token is a valid JWT format
+            var tokenParts = tokenResponse.Token.Split('.');
+            Assert.Equal(3, tokenParts.Length); // JWT should have 3 parts: Header, Payload, Signature
         }
 
         [Fact]
@@ -68,6 +72,21 @@ namespace SocialApi.Tests
             var statusCodeResult = Assert.IsType<ObjectResult>(result);
             Assert.Equal(500, statusCodeResult.StatusCode);
             Assert.Contains("Error: Some error", statusCodeResult.Value.ToString());
+        }
+
+        [Fact]
+        public void GenerateToken_ReturnsBadRequest_WhenApiKeyIsEmpty()
+        {
+            // Arrange
+            var emptyApiKey = string.Empty;
+            _mockConfiguration.Setup(config => config["Jwt:Key"]).Returns("valid-api-key");
+
+            // Act
+            var result = _controller.GenerateToken(emptyApiKey);
+
+            // Assert
+            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal("API Key cannot be null or empty.", badRequestResult.Value);
         }
     }
 }

@@ -18,15 +18,13 @@ namespace SocialApi.Controllers
             this.dbContext = dbContext;
         }
 
+        // Get all users
         [HttpGet]
         public IActionResult GetAllUsers()
         {
             try
             {
-                // Retrieve data from the database
                 var records = dbContext.Users.ToList();
-
-                // Map domain models to DTOs
                 var recordDto = records.Select(record => new UsersDto
                 {
                     UserId = record.UserId,
@@ -44,6 +42,7 @@ namespace SocialApi.Controllers
             }
         }
 
+        // Get user by ID
         [HttpGet("{id}")]
         public IActionResult GetUserById(string id)
         {
@@ -54,7 +53,7 @@ namespace SocialApi.Controllers
                     return BadRequest($"Invalid UserId: {id}");
                 }
 
-                var toDb = dbContext.Users.FirstOrDefault(x => x.UserId == parsedId);
+                var toDb = dbContext.Users.SingleOrDefault(x => x.UserId == parsedId);
                 if (toDb == null)
                 {
                     return NotFound($"No user found with UserId: {id}");
@@ -71,18 +70,19 @@ namespace SocialApi.Controllers
 
                 return Ok(userDto);
             }
-            catch (Exception ex1)
+            catch (Exception ex)
             {
-                return StatusCode(500, $"An unexpected error occurred: {ex1.Message}");
+                return StatusCode(500, $"An unexpected error occurred: {ex.Message}");
             }
         }
 
+        // Get user by user address
         [HttpGet("by-address/{userAddress}")]
         public IActionResult GetUserByAddress(string userAddress)
         {
             try
             {
-                var toDb = dbContext.Users.FirstOrDefault(x => x.UserAddress == userAddress);
+                var toDb = dbContext.Users.SingleOrDefault(x => x.UserAddress == userAddress);
                 if (toDb == null)
                 {
                     return NotFound($"No user found with user address: {userAddress}");
@@ -99,23 +99,25 @@ namespace SocialApi.Controllers
 
                 return Ok(userDto);
             }
-            catch (Exception ex2)
+            catch (Exception ex)
             {
-                return StatusCode(500, $"An unexpected error occurred. Please try again later.{ex2.Message}");
+                return StatusCode(500, $"An unexpected error occurred. Please try again later. {ex.Message}");
             }
         }
 
+        // Create a new user
         [HttpPost]
         public IActionResult CreateUser([FromBody] AddUsersRequestDto usersToAdd)
         {
             try
             {
+                // Automatically assign CreatedOn if not present in the request DTO
                 var usersDomainModel = new Users
                 {
                     Nickname = usersToAdd.Nickname,
                     Email = usersToAdd.Email,
                     UserAddress = usersToAdd.UserAddress,
-                    CreatedOn = usersToAdd.CreatedOn
+                    CreatedOn = DateTime.UtcNow // Set CreatedOn to the current UTC time
                 };
 
                 dbContext.Add(usersDomainModel);
@@ -127,16 +129,15 @@ namespace SocialApi.Controllers
                     Nickname = usersDomainModel.Nickname,
                     Email = usersDomainModel.Email,
                     UserAddress = usersDomainModel.UserAddress,
-                    CreatedOn = DateTime.Now
+                    CreatedOn = usersDomainModel.CreatedOn
                 };
 
                 return CreatedAtAction(nameof(GetUserById), new { id = newUserDto.UserId }, newUserDto);
             }
-            catch (Exception ex3)
+            catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred while creating the user: {ex3.Message}");
+                return StatusCode(500, $"An error occurred while creating the user: {ex.Message}");
             }
         }
     }
 }
-  

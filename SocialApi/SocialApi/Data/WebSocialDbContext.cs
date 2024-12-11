@@ -15,7 +15,8 @@ namespace SocialApi.Data
         public virtual DbSet<Nfts> Nfts { get; set; } // Marked virtual for mocking
         public virtual DbSet<UsersNft> UserNfts { get; set; } // Marked virtual for mocking
 
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        // Use 'new' keyword to hide the inherited member intentionally.
+        public new Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return base.SaveChangesAsync(cancellationToken);
         }
