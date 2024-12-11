@@ -137,6 +137,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "SocialApi.Controllers.TokenController",
+    "Method": "GenerateToken",
+    "RelativePath": "api/Token/generate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "apiKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SocialApi.Controllers.UserNftsController",
     "Method": "GetPairedNfts",
     "RelativePath": "api/UserNfts/get-paired-nfts",
@@ -154,7 +170,7 @@
   },
   {
     "ContainingType": "SocialApi.Controllers.UserNftsController",
-    "Method": "PairUserWithRecord",
+    "Method": "PairUserWithNft",
     "RelativePath": "api/UserNfts/pair",
     "HttpMethod": "POST",
     "IsController": true,

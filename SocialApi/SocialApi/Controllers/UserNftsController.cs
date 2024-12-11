@@ -1,18 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialApi.Models.Domain;
 using SocialApi.Data;
 using SocialApi.Models.DTO;
-using System;
-using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SocialApi.Controllers
 {
-    [ApiController]
+    
     [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
     public class UserNftsController : ControllerBase
     {
+        
+
         private readonly WebSocialDbContext _context;
 
         public UserNftsController(WebSocialDbContext context)
@@ -21,13 +23,13 @@ namespace SocialApi.Controllers
         }
 
         [HttpPost("pair")]
-        public async Task<IActionResult> PairUserWithRecord([FromBody] AddUserNftRequestDto dto)
+        public async Task<IActionResult> PairUserWithNft([FromBody] AddUserNftRequestDto dto)
         {
             if (string.IsNullOrEmpty(dto.UserAddress))
                 return BadRequest("User address cannot be null or empty.");
 
             if (string.IsNullOrEmpty(dto.NftAddress) && string.IsNullOrEmpty(dto.NftId))
-                return BadRequest("Either Record path or Record ID must be provided.");
+                return BadRequest("Either Nft path or Nft ID must be provided.");
 
             try
             {
@@ -57,7 +59,8 @@ namespace SocialApi.Controllers
                 _context.UserNfts.Add(userNft);
                 await _context.SaveChangesAsync();
 
-                return Ok(new { Message = "NFT paired successfully.", UserNftId = userNft.UserNftId });
+                var response = new PairingResponseDto("NFT paired successfully.", userNft.UserNftId);
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -84,21 +87,22 @@ namespace SocialApi.Controllers
                     .Join(_context.Nfts,
                           un => un.NftId,
                           nft => nft.NftId,
-                          (un, nft) => new
-                          {
-                              NftId = nft.NftId,
-                              NftAddress = nft.NftAddress
-                          })
+                          (un, nft) => new UsersNftDto(
+                              un.UserNftId,
+                              un.UserId,
+                              nft.NftId,
+                              un.CreatedOn,
+                              nft.NftAddress // Pass the NftAddress from Nfts table
+                          ))
                     .ToListAsync();
 
                 return Ok(pairedNfts);
             }
-            catch (Exception ex)
+            catch (Exception ex1)
             {
-                return StatusCode(500, $"An error occurred: {ex.Message}");
+                return StatusCode(500, $"An error occurred: {ex1.Message}");
             }
         }
-
         // Private helper methods
 
 

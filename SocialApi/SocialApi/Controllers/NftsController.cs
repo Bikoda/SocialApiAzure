@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SocialApi.Data;
 using SocialApi.Models.Domain;
@@ -11,6 +12,7 @@ namespace SocialApi.Controllers
     //GET: https://localhost:7279/api/Logs
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
 
     public class NftsController : ControllerBase
     {
@@ -52,16 +54,21 @@ namespace SocialApi.Controllers
         }
 
 
-        
+
 
         [HttpGet]
         [Route("{id:int}")]
         public IActionResult GetById(int id)
         {
-           
             try
             {
                 var toDb = dbContext.Nfts.FirstOrDefault(x => x.NftId == id);
+
+                if (toDb == null)
+                {
+                    // Return NotFoundObjectResult if the NFT does not exist
+                    return NotFound($"Nft with ID {id} not found.");
+                }
 
                 var nftDto = new NftDto
                 {
@@ -73,12 +80,11 @@ namespace SocialApi.Controllers
                     CreatedOn = toDb.CreatedOn
                 };
 
-
                 return Ok(nftDto);
             }
-            catch (Exception ex2)
+            catch (Exception ex)
             {
-                return BadRequest(ex2.Message);
+                return BadRequest(ex.Message); // Handles other errors
             }
         }
 
@@ -88,6 +94,7 @@ namespace SocialApi.Controllers
         {
             try
             {
+                
                 if (page < 0 || pageSize <= 0)
                 {
                     return BadRequest("Invalid input: 'page' must be 0 or greater, and 'pageSize' must be greater than 0.");
@@ -158,9 +165,9 @@ namespace SocialApi.Controllers
 
                 return Ok(result); // Return the result object
             }
-            catch (Exception ex)
+            catch (Exception ex2)
             {
-                return BadRequest(ex.Message); // Handle any exceptions
+                return BadRequest(ex2.Message); // Handle any exceptions
             }
         }
 
@@ -207,9 +214,9 @@ namespace SocialApi.Controllers
 
                 return CreatedAtAction(nameof(GetById), new { id = newNftDto.NftId }, newNftDto);
             }
-            catch (Exception ex)
+            catch (Exception ex3)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex3.Message);
             }
         }
 
@@ -240,9 +247,9 @@ namespace SocialApi.Controllers
                 // Return DTOs
                 return Ok(nftDto);
             }
-            catch (Exception ex)
+            catch (Exception ex4)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex4.Message);
             }
         }
 
@@ -278,9 +285,9 @@ namespace SocialApi.Controllers
 
                 return Ok(updatedNftDto);
             }
-            catch (Exception ex)
+            catch (Exception ex5)
             {
-                return BadRequest($"An error occurred: {ex.Message}");
+                return BadRequest($"An error occurred: {ex5.Message}");
             }
         }
 
@@ -320,9 +327,9 @@ namespace SocialApi.Controllers
 
                 return Ok(updatedNftDto);
             }
-            catch (Exception ex)
+            catch (Exception ex6)
             {
-                return BadRequest($"An error occurred: {ex.Message}");
+                return BadRequest($"An error occurred: {ex6.Message}");
             }
         }
 
@@ -359,9 +366,9 @@ namespace SocialApi.Controllers
 
                 return Ok(updatedNftDto);
             }
-            catch (Exception ex)
+            catch (Exception ex7)
             {
-                return BadRequest($"An error occurred: {ex.Message}");
+                return BadRequest($"An error occurred: {ex7.Message}");
             }
         }
 

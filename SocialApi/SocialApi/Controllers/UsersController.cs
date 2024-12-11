@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SocialApi.Data;
 using SocialApi.Models.Domain;
 using SocialApi.Models.DTO;
@@ -9,6 +8,7 @@ namespace SocialApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly WebSocialDbContext dbContext;
@@ -71,9 +71,9 @@ namespace SocialApi.Controllers
 
                 return Ok(userDto);
             }
-            catch (Exception ex)
+            catch (Exception ex1)
             {
-                return StatusCode(500, $"An unexpected error occurred: {ex.Message}");
+                return StatusCode(500, $"An unexpected error occurred: {ex1.Message}");
             }
         }
 
@@ -99,9 +99,9 @@ namespace SocialApi.Controllers
 
                 return Ok(userDto);
             }
-            catch (Exception ex)
+            catch (Exception ex2)
             {
-                return StatusCode(500, "An unexpected error occurred. Please try again later.");
+                return StatusCode(500, $"An unexpected error occurred. Please try again later.{ex2.Message}");
             }
         }
 
@@ -132,9 +132,9 @@ namespace SocialApi.Controllers
 
                 return CreatedAtAction(nameof(GetUserById), new { id = newUserDto.UserId }, newUserDto);
             }
-            catch (Exception ex)
+            catch (Exception ex3)
             {
-                return StatusCode(500, $"An error occurred while creating the user: {ex.Message}");
+                return StatusCode(500, $"An error occurred while creating the user: {ex3.Message}");
             }
         }
     }

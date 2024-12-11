@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "SocialApi",
-    "version": "1.0"
+    "version": "v1"
   },
   "paths": {
     "/api/Nfts": {
@@ -195,6 +195,27 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Token/generate": {
+      "post": {
+        "tags": [
+          "Token"
+        ],
+        "parameters": [
+          {
+            "name": "apiKey",
+            "in": "header",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -420,6 +441,19 @@
         },
         "additionalProperties": false
       }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Insert Json Token here",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }
