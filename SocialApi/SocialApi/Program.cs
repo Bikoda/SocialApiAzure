@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SocialApi.Data;
+using SocialApi.Services; // Include the namespace for the BidClosingService
 using System.Text;
 
 namespace SocialApi
@@ -64,8 +65,8 @@ namespace SocialApi
                            .AllowAnyHeader());
             });
 
-            // Add database context
-            builder.Services.AddDbContext<WebSocialDbContext>(options =>
+            // Add database context and interface registration
+            builder.Services.AddDbContext<IWebSocialDbContext, WebSocialDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("WebSocialConnectionString")));
 
             // Add JWT Authentication
@@ -93,6 +94,9 @@ namespace SocialApi
                     IssuerSigningKey = new SymmetricSecurityKey(keyBytes)
                 };
             });
+
+            // Register the BidClosingService as a hosted service
+            builder.Services.AddHostedService<BidClosingService>();
 
             var app = builder.Build();
 

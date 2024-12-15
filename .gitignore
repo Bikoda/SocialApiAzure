@@ -1,1 +1,121 @@
-SocialApi\.vs\*
+# Build Folders
+bin/
+obj/
+Build/
+
+# User-Specific Files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.swp
+
+# Logs and Debugging Files
+*.log
+*.tlog
+*.pdb
+
+# Temporary Files
+*.tmp
+*.vspscc
+*.vssscc
+*.ncrunch*
+._*
+*.DS_Store
+Thumbs.db
+
+# Visual Studio Folders
+.vs/
+.vscode/
+
+# Package Management
+*.nuget/
+packages/
+node_modules/
+
+# Generated Files
+GeneratedFiles/
+ServiceFabricBackup/
+
+# Configuration Files
+*.config
+*.settings
+*.env
+*.env.*
+
+# WebAssembly Files
+wwwroot/dist/
+wwwroot/lib/
+**/publish/
+**/node_modules/
+
+# Deployment Artifacts
+*.pubxml
+*.publish.xml
+publish/
+out/
+
+# Entity Framework
+*.efmigrationhistory
+
+# Coverage and Test Results
+*.coverage
+*.coveragexml
+*.testsettings
+*.vsmdi
+TestResults/
+
+# IDE-Specific Settings
+.idea/
+_ReSharper.Caches/
+
+# macOS Files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Build Artifacts
+*.dll
+*.exe
+*.cache
+*.ilk
+*.log
+*.obj
+*.lib
+*.dll
+*.o
+*.so
+*.dylib
+*.class
+
+# Debug Files
+*.pdb
+*.ipdb
+*.pgd
+*.mem
+*.exp
+
+# Azure Related Files
+.localhistory/
+AzureStorageEmulator.*
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Miscellaneous
+*.bak
+*.old
+*.orig
+*.tmp
+*.temp
+
+# Ignore Secrets
+secrets.json
+secrets.*
