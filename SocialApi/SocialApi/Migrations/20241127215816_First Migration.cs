@@ -10,27 +10,12 @@ namespace SocialApi.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-           /* migrationBuilder.CreateTable(
-                name: "LogRecord",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "long", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Views = table.Column<int>(type: "long", nullable: false),
-                    Likes = table.Column<int>(type: "long", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LogRecord", x => x.Id);
-                });*/
+           
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
-        { /*
-            migrationBuilder.DropTable(
-                name: "LogRecord");*/
+        { 
         }
     }
 }

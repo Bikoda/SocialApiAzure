@@ -1,49 +1,123 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Moq;
-using System.Linq.Expressions;
 using System.Collections.Generic;
-using SocialApi.Data;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 public static class MockDbSetHelper
 {
-    public static Mock<DbSet<T>> CreateMockDbSet<T>(IQueryable<T> data) where T : class
+    public static Mock<DbSet<T>> CreateMockDbSet<T>(IEnumerable<T> data) where T : class
     {
+        var queryableData = data.AsQueryable();
+
         var mockSet = new Mock<DbSet<T>>();
-
-        // Mock IQueryable interface
-        mockSet.As<IQueryable<T>>().Setup(m => m.Provider).Returns(data.Provider);
-        mockSet.As<IQueryable<T>>().Setup(m => m.Expression).Returns(data.Expression);
-        mockSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(data.ElementType);
-        mockSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
-
-        // Mock Add method to modify data directly
-        mockSet.Setup(m => m.Add(It.IsAny<T>())).Callback<T>((entity) =>
-        {
-            var list = data.ToList();
-            list.Add(entity);
-            data = list.AsQueryable();  // Update the queryable collection
-        });
-
-        // Mock AddRange method to modify data directly
-        mockSet.Setup(m => m.AddRange(It.IsAny<IEnumerable<T>>())).Callback<IEnumerable<T>>((entities) =>
-        {
-            var list = data.ToList();
-            list.AddRange(entities);
-            data = list.AsQueryable();  // Update the queryable collection
-        });
-
-        // Mock Remove method to modify data directly
-        mockSet.Setup(m => m.Remove(It.IsAny<T>())).Callback<T>((entity) =>
-        {
-            var list = data.ToList();
-            list.Remove(entity);
-            data = list.AsQueryable();  // Update the queryable collection
-        });
-
-        // Mock SaveChanges on the DbContext, not DbSet
-        var mockDbContext = new Mock<WebSocialDbContext>(Mock.Of<DbContextOptions<WebSocialDbContext>>());
-        mockDbContext.Setup(m => m.SaveChanges()).Returns(1); // Simulate 1 record saved
+        mockSet.As<IQueryable<T>>().Setup(m => m.Provider).Returns(queryableData.Provider);
+        mockSet.As<IQueryable<T>>().Setup(m => m.Expression).Returns(queryableData.Expression);
+        mockSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(queryableData.ElementType);
+        mockSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(queryableData.GetEnumerator());
+        mockSet.As<IAsyncEnumerable<T>>().Setup(m => m.GetAsyncEnumerator(It.IsAny<CancellationToken>()))
+            .Returns(new TestAsyncEnumerator<T>(queryableData.GetEnumerator()));
+        mockSet.As<IQueryable<T>>().Setup(m => m.Provider).Returns(new TestAsyncQueryProvider<T>(queryableData.Provider));
 
         return mockSet;
     }
+
+    public static void SetupFindAsync<T>(Mock<DbSet<T>> mockSet, IEnumerable<T> data) where T : class
+    {
+        mockSet.Setup(m => m.FindAsync(It.IsAny<object[]>()))
+            .ReturnsAsync((object[] ids) =>
+            {
+                var id = ids[0]; // Assuming the first parameter is the primary key
+                return data.FirstOrDefault(x => GetPrimaryKeyValue(x).Equals(id));
+            });
+    }
+
+    private static object GetPrimaryKeyValue<T>(T entity)
+    {
+        // Assuming the primary key is a property ending with "Id"
+        var keyProperty = typeof(T).GetProperties().FirstOrDefault(p => p.Name.EndsWith("Id"));
+        if (keyProperty == null)
+        {
+            throw new InvalidOperationException($"No primary key property found for type {typeof(T).Name}. Ensure a property ending with 'Id' exists.");
+        }
+        return keyProperty.GetValue(entity);
+    }
+}
+
+public class TestAsyncQueryProvider<TEntity> : IAsyncQueryProvider
+{
+    private readonly IQueryProvider _inner;
+
+    public TestAsyncQueryProvider(IQueryProvider inner)
+    {
+        _inner = inner;
+    }
+
+    public IQueryable CreateQuery(Expression expression)
+    {
+        return new TestAsyncEnumerable<TEntity>(expression);
+    }
+
+    public IQueryable<TElement> CreateQuery<TElement>(Expression expression)
+    {
+        return new TestAsyncEnumerable<TElement>(expression);
+    }
+
+    public object Execute(Expression expression)
+    {
+        return _inner.Execute(expression);
+    }
+
+    public TResult Execute<TResult>(Expression expression)
+    {
+        return _inner.Execute<TResult>(expression);
+    }
+
+    public TResult ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken)
+    {
+        // Ensure the result is wrapped in a task
+        var executionResult = Execute(expression);
+
+        // Return the execution result as a Task<TResult>
+        return Task.FromResult((TResult)executionResult).Result;
+    }
+}
+
+public class TestAsyncEnumerable<T> : EnumerableQuery<T>, IAsyncEnumerable<T>, IQueryable<T>
+{
+    public TestAsyncEnumerable(IEnumerable<T> enumerable) : base(enumerable) { }
+    public TestAsyncEnumerable(Expression expression) : base(expression) { }
+
+    public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+    {
+        return new TestAsyncEnumerator<T>(this.AsEnumerable().GetEnumerator());
+    }
+
+    IQueryProvider IQueryable.Provider => new TestAsyncQueryProvider<T>(this);
+}
+
+public class TestAsyncEnumerator<T> : IAsyncEnumerator<T>
+{
+    private readonly IEnumerator<T> _inner;
+
+    public TestAsyncEnumerator(IEnumerator<T> inner)
+    {
+        _inner = inner;
+    }
+
+    public ValueTask DisposeAsync()
+    {
+        _inner.Dispose();
+        return ValueTask.CompletedTask;
+    }
+
+    public ValueTask<bool> MoveNextAsync()
+    {
+        return new ValueTask<bool>(_inner.MoveNext());
+    }
+
+    public T Current => _inner.Current;
 }
