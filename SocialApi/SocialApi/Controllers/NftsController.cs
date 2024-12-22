@@ -94,6 +94,82 @@ namespace SocialApi.Controllers
         {
             try
             {
+                // Validate input parameters
+                if (page < 0 || pageSize <= 0)
+                {
+                    return BadRequest(new { Message = "Invalid input: 'page' must be 0 or greater, and 'pageSize' must be greater than 0." });
+                }
+
+                if (!new[] { "Likes", "Views", "CreatedOn" }.Contains(orderBy))
+                {
+                    return BadRequest(new { Message = "Invalid input: 'orderBy' must be 'Likes', 'Views', or 'CreatedOn'." });
+                }
+
+                // Base query
+                var nftQuery = dbContext.Nfts.AsQueryable();
+
+                // Apply filtering for IsNsfw if provided
+                if (isNsfw.HasValue)
+                {
+                    nftQuery = nftQuery.Where(n => n.IsNsfw == isNsfw.Value);
+                }
+
+                // Dynamic ordering
+                nftQuery = orderBy switch
+                {
+                    "Likes" => nftQuery.OrderByDescending(n => n.Likes),
+                    "Views" => nftQuery.OrderByDescending(n => n.Views),
+                    "CreatedOn" => nftQuery.OrderByDescending(n => n.CreatedOn),
+                    _ => nftQuery // Default case (should never be hit due to prior validation)
+                };
+
+                // Total number of filtered NFTs
+                int totalNfts = nftQuery.Count();
+                int totalPages = (int)Math.Ceiling(totalNfts / (double)pageSize);
+
+                // Calculate the starting index for the page
+                int skip = page * pageSize;
+
+                // Apply pagination and projection
+                var nfts = nftQuery
+                    .Skip(skip)
+                    .Take(pageSize)
+                    .Select(n => new
+                    {
+                        NftId = n.NftId,
+                        NftAddress = n.NftAddress,
+                        Views = n.Views,
+                        Likes = n.Likes,
+                        IsNsfw = n.IsNsfw,
+                        CreatedOn = n.CreatedOn
+                    })
+                    .ToList();
+
+                // Create the response object
+                var response = new
+                {
+                    Nfts = nfts,
+                    From = skip + 1,
+                    To = Math.Min(skip + nfts.Count, totalNfts),
+                    Total = totalNfts,
+                    TotalPages = totalPages
+                };
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (optional: replace with a logging framework)
+                return BadRequest(new { Message = "An error occurred while processing the request.", Details = ex.Message });
+            }
+        }
+
+        /*[HttpGet]
+        [Route("page-nfts")]
+        public IActionResult GetPageNfts(int page, int pageSize, string orderBy = "Likes", bool? isNsfw = null)
+        {
+            try
+            {
                 
                 if (page < 0 || pageSize <= 0)
                 {
@@ -169,7 +245,7 @@ namespace SocialApi.Controllers
             {
                 return BadRequest(ex2.Message); // Handle any exceptions
             }
-        }
+        }*/
 
         [HttpPost]
         public IActionResult CreateNft([FromBody] AddNftRequestDto nftToAdd)

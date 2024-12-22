@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure;
+using Microsoft.EntityFrameworkCore;
 using SocialApi.Models.Domain;
 
 namespace SocialApi.Data
@@ -12,8 +13,10 @@ namespace SocialApi.Data
         public virtual DbSet<CloseBids> CloseBids { get; set; }
         public virtual DbSet<BidHistory> BidHistory { get; set; }
         public virtual DbSet<Nfts> Nfts { get; set; }
+        public virtual DbSet<Tags> Tags { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<UsersNft> UserNfts { get; set; }
+        public virtual DbSet<NftTags> NftTags { get; set; } // New DbSet for the join table
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -74,6 +77,38 @@ namespace SocialApi.Data
                 .WithMany()
                 .HasForeignKey(bh => bh.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Nfts and Tags many-to-many relationship
+            modelBuilder.Entity<NftTags>()
+                .HasKey(nt => new { nt.NftId, nt.TagId }); // Composite primary key
+
+            modelBuilder.Entity<NftTags>()
+                .HasOne(nt => nt.Nft)
+                .WithMany(n => n.NftTags)
+                .HasForeignKey(nt => nt.NftId);
+
+            modelBuilder.Entity<NftTags>()
+                .HasOne(nt => nt.Tag)
+                .WithMany(t => t.NftTags)
+                .HasForeignKey(nt => nt.TagId);
+
+            // Configure CreatedOn for NftTags
+            modelBuilder.Entity<NftTags>()
+                .Property(nt => nt.CreatedOn)
+                .IsRequired()
+                .HasDefaultValueSql("GETUTCDATE()"); // Use SQL Server default for UTC timestamp
+
+            // Additional Tag constraints
+            modelBuilder.Entity<Tags>()
+                .Property(t => t.Name)
+                .HasMaxLength(255)
+                .IsRequired();
+
+            // Optional: Additional Nft constraints
+            modelBuilder.Entity<Nfts>()
+                .Property(n => n.NftAddress)
+                .HasMaxLength(255)
+                .IsRequired();
         }
     }
 }
