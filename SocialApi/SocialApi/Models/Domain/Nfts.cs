@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Azure;
+using System.ComponentModel.DataAnnotations;
 
 namespace SocialApi.Models.Domain
 {
@@ -18,6 +19,11 @@ namespace SocialApi.Models.Domain
         public bool IsNsfw { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+        public long? TagId { get; set; }
+        public Tags Tag { get; set; }  // Navigation property
+
+        public ICollection<NftTags> NftTags { get; set; }
 
         // Constructor for initialization
         public Nfts(string nftAddress, long views = 0, long likes = 0, bool isNsfw = false, DateTime? createdOn = null)
