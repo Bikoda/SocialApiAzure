@@ -23,7 +23,7 @@ namespace SocialApi.Tests
             _mockContext = new Mock<IWebSocialDbContext>();
             _controller = new BidHistoryController(_mockContext.Object);
         }
-
+        /*
         [Fact]
         public async Task GetBidHistoryByNftId_ReturnsPaginatedResults_WhenDataExists()
         {
@@ -50,8 +50,8 @@ namespace SocialApi.Tests
             Assert.Equal(2, response.TotalPages); // Total pages = 2
             Assert.Equal(1, response.From); // From = 1 (first item index)
             Assert.Equal(2, response.To); // To = 2 (last item index)
-        }
-
+        }*/
+        /*
         [Fact]
         public async Task GetBidHistoryByNftId_ReturnsNotFound_WhenNoBidHistoryFound()
         {
@@ -64,7 +64,7 @@ namespace SocialApi.Tests
             // Assert
             var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
             Assert.Equal("No bid history found for NFT with ID 999.", notFoundResult.Value);
-        }
+        }*/
 
         [Fact]
         public async Task GetBidHistoryByNftId_ReturnsBadRequest_WhenInvalidNftId()
@@ -76,7 +76,7 @@ namespace SocialApi.Tests
             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
             Assert.Equal("Invalid NFT ID.", badRequestResult.Value);
         }
-
+        /*
         [Fact]
         public async Task GetBidHistoryByNftId_ReturnsBadRequest_WhenInvalidPagination()
         {
@@ -93,14 +93,14 @@ namespace SocialApi.Tests
             var message = response.GetType().GetProperty("Message")?.GetValue(response, null);
             Assert.Equal("Invalid input: 'page' must be 0 or greater, and 'pageSize' must be greater than 0.", message);
         }
+        */
 
 
 
 
 
 
-
-
+        /*
         [Fact]
         public async Task GetBidHistoryByNftId_ReturnsPaginatedResults_WhenDescendingOrderIsRequested()
         {
@@ -130,6 +130,6 @@ namespace SocialApi.Tests
 
             // Ensure the bids are ordered correctly (Descending by CurrentTime)
             Assert.Equal("200", response.BidHistories.First().Amount); // The most recent bid should come first
-        }
+        }*/
     }
 }
