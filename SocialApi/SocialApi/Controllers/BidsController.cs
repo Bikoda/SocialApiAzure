@@ -10,6 +10,7 @@ namespace SocialApi.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
+
     public class BidsController : ControllerBase
     {
         private readonly IWebSocialDbContext _dbContext;

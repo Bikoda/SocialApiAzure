@@ -13,36 +13,54 @@ namespace SocialApi.Controllers
     public class OpenBidsController : ControllerBase
     {
         private readonly IWebSocialDbContext _dbContext;
+        private readonly ILogger<OpenBidsController> _logger;
 
-        public OpenBidsController(IWebSocialDbContext dbContext)
+        public OpenBidsController(IWebSocialDbContext dbContext, ILogger<OpenBidsController> logger)
         {
-            _dbContext = dbContext;
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        // GET: api/OpenBids
+        // Helper function to include necessary relationships
+        private IQueryable<OpenBids> IncludeBidRelations(IQueryable<OpenBids> query)
+        {
+            return query.Include(ob => ob.Bid)
+                        .Include(ob => ob.Nft)
+                        .Include(ob => ob.User);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllOpenBids()
         {
-            var openBids = await _dbContext.OpenBids
-                .Include(ob => ob.Bid)
-                .Include(ob => ob.Nft)
-                .Include(ob => ob.User)
-                .ToListAsync();
-
-            var response = openBids.Select(ob => new OpenBidsDto
+            try
             {
-                OpenBidId = ob.OpenBidId,
-                BidId = ob.BidId,
-                NftId = ob.NftId,
-                HighestBidder = ob.HighestBidder,
-                Amount = ob.Amount,
-                CurrentTime = ob.CurrentTime
-            });
+                var openBids = await _dbContext.OpenBids
+                    .Include(ob => ob.Bid)
+                    .Include(ob => ob.Nft)
+                    .Include(ob => ob.User)
+                    .ToListAsync();
 
-            return Ok(response);
+                var response = openBids
+                    .Select(ob => new OpenBidsDto
+                    {
+                        OpenBidId = ob.OpenBidId,
+                        BidId = ob.BidId,
+                        NftId = ob.NftId,
+                        HighestBidder = ob.HighestBidder,
+                        Amount = ob.Amount,
+                        CurrentTime = ob.CurrentTime
+                    })
+                    .ToList();
+
+                return Ok(response);  // Return OkObjectResult explicitly
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred in GetAllOpenBids: {Message}", ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
         }
 
-        // GET: api/OpenBids/{id}
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOpenBid(long id)
         {
@@ -54,7 +72,7 @@ namespace SocialApi.Controllers
 
             if (openBid == null)
             {
-                return NotFound();
+                return NotFound();  // This returns a NotFoundResult, wrapped in ActionResult<OpenBidsDto>
             }
 
             var response = new OpenBidsDto
@@ -70,48 +88,114 @@ namespace SocialApi.Controllers
             return Ok(response);
         }
 
-        // PUT: api/OpenBids/{id}
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateOpenBid(long id, [FromBody] OpenBidsDto dto)
         {
-            var openBid = await _dbContext.OpenBids.FindAsync(id);
-            if (openBid == null)
+            if (dto == null || string.IsNullOrWhiteSpace(dto.Amount))
             {
-                return NotFound();
+                return BadRequest(new { Message = "Invalid request data." });
             }
 
-            openBid.HighestBidder = dto.HighestBidder;
-            openBid.Amount = dto.Amount;
-            openBid.CurrentTime = DateTime.UtcNow;
-
-            _dbContext.OpenBids.Update(openBid);
-            await _dbContext.SaveChangesAsync();
-
-            return Ok(new OpenBidsDto
+            try
             {
-                OpenBidId = openBid.OpenBidId,
-                BidId = openBid.BidId,
-                NftId = openBid.NftId,
-                HighestBidder = openBid.HighestBidder,
-                Amount = openBid.Amount,
-                CurrentTime = openBid.CurrentTime
-            });
+                var openBid = await _dbContext.OpenBids.FindAsync(id);
+                if (openBid == null)
+                {
+                    return NotFound();
+                }
+
+                openBid.HighestBidder = dto.HighestBidder;
+                openBid.Amount = dto.Amount;
+                openBid.CurrentTime = DateTime.UtcNow;
+
+                _dbContext.OpenBids.Update(openBid);
+                await _dbContext.SaveChangesAsync();
+
+                _logger.LogInformation($"Successfully updated open bid with ID: {id}");
+                return NoContent(); // No content is a good response for a successful update.
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred in UpdateOpenBid: {Message}", ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
         }
 
-        // DELETE: api/OpenBids/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOpenBid(long id)
         {
-            var openBid = await _dbContext.OpenBids.FindAsync(id);
-            if (openBid == null)
+            try
             {
-                return NotFound();
+                var openBid = await _dbContext.OpenBids.FindAsync(id);
+                if (openBid == null)
+                {
+                    return NotFound();
+                }
+
+                _dbContext.OpenBids.Remove(openBid);
+                await _dbContext.SaveChangesAsync();
+
+                _logger.LogInformation($"Successfully deleted open bid with ID: {id}");
+                return NoContent();
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred in DeleteOpenBid: {Message}", ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
-            _dbContext.OpenBids.Remove(openBid);
-            await _dbContext.SaveChangesAsync();
+        [HttpGet("paginated")]
+        public async Task<IActionResult> GetPaginatedOpenBids(int page = 0, int pageSize = 10)
+        {
+            try
+            {
+                if (page < 0 || pageSize <= 0)
+                {
+                    return BadRequest(new { Message = "Invalid input: 'page' must be 0 or greater, and 'pageSize' must be greater than 0." });
+                }
 
-            return NoContent();
+                var query = _dbContext.OpenBids
+                    .Include(ob => ob.Bid)
+                    .Include(ob => ob.Nft)
+                    .Include(ob => ob.User)
+                    .AsQueryable();
+
+                int totalItems = await query.CountAsync();
+                int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+                var openBids = await query
+                    .Skip(page * pageSize)
+                    .Take(pageSize)
+                    .Select(ob => new OpenBidsDto
+                    {
+                        OpenBidId = ob.OpenBidId,
+                        BidId = ob.BidId,
+                        NftId = ob.NftId,
+                        HighestBidder = ob.HighestBidder,
+                        Amount = ob.Amount,
+                        CurrentTime = ob.CurrentTime
+                    })
+                    .ToListAsync();
+
+                var response = new PaginatedOpenBidsResponse
+                {
+                    OpenBids = openBids,
+                    From = page * pageSize + 1,
+                    To = Math.Min((page + 1) * pageSize, totalItems),
+                    Total = totalItems,
+                    TotalPages = totalPages
+                };
+
+                return Ok(response);  // Return OkObjectResult explicitly
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred in GetPaginatedOpenBids: {Message}", ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }
+
