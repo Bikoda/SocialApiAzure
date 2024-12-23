@@ -77,19 +77,21 @@ namespace SocialApi.Data
                 .HasForeignKey(bh => bh.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Nfts and Tags many-to-many relationship
+            // Nfts and Tags many-to-many relationship via NftTags
             modelBuilder.Entity<NftTags>()
                 .HasKey(nt => new { nt.NftId, nt.TagId }); // Composite primary key
 
             modelBuilder.Entity<NftTags>()
                 .HasOne(nt => nt.Nft)
                 .WithMany(n => n.NftTags)
-                .HasForeignKey(nt => nt.NftId);
+                .HasForeignKey(nt => nt.NftId)
+                .OnDelete(DeleteBehavior.Cascade); // Specify delete behavior explicitly
 
             modelBuilder.Entity<NftTags>()
                 .HasOne(nt => nt.Tag)
                 .WithMany(t => t.NftTags)
-                .HasForeignKey(nt => nt.TagId);
+                .HasForeignKey(nt => nt.TagId)
+                .OnDelete(DeleteBehavior.Cascade); // Specify delete behavior explicitly
 
             // Configure CreatedOn for NftTags
             modelBuilder.Entity<NftTags>()

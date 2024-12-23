@@ -11,7 +11,6 @@ namespace SocialApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class NftTagsController : ControllerBase
     {
         private readonly WebSocialDbContext dbContext;

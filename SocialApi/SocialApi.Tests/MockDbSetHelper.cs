@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
+using SocialApi.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -24,9 +25,10 @@ public static class MockDbSetHelper
             .Returns(new TestAsyncEnumerator<T>(queryableData.GetEnumerator()));
         mockSet.As<IQueryable<T>>().Setup(m => m.Provider).Returns(new TestAsyncQueryProvider<T>(queryableData.Provider));
 
-        // Mocking async Count method
-        mockSet.Setup(m => m.CountAsync(It.IsAny<CancellationToken>()))
-            .ReturnsAsync(queryableData.Count());
+        // Mocking async Count method using LINQ method directly
+        mockSet.As<IQueryable<T>>()
+            .Setup(m => m.CountAsync(It.IsAny<CancellationToken>()))
+            .Returns((CancellationToken cancellationToken) => Task.FromResult(queryableData.Count()));
 
         return mockSet;
     }
@@ -49,6 +51,16 @@ public static class MockDbSetHelper
             throw new InvalidOperationException($"No primary key property found for type {typeof(T).Name}. Ensure a property ending with 'Id' exists.");
         }
         return keyProperty.GetValue(entity);
+    }
+
+    // New helper method to create an in-memory DbContext for tests
+    public static WebSocialDbContext CreateInMemoryDbContext()
+    {
+        var options = new DbContextOptionsBuilder<WebSocialDbContext>()
+            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) // Unique database per test
+            .Options;
+
+        return new WebSocialDbContext(options); // Return a new instance of WebSocialDbContext
     }
 }
 
