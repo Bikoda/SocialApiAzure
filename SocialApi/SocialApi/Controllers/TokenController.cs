@@ -45,7 +45,7 @@ namespace SocialApi.Controllers
                     issuer: _configuration["Jwt:Issuer"],
                     audience: _configuration["Jwt:Audience"],
                     claims: claims,
-                    expires: DateTime.UtcNow.AddMinutes(30),
+                    expires: DateTime.UtcNow.AddDays(1),
                     signingCredentials: creds);
 
                 var tokenResponse = new TokenResponseDto(new JwtSecurityTokenHandler().WriteToken(token));
