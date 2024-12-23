@@ -18,9 +18,15 @@ public static class MockDbSetHelper
         mockSet.As<IQueryable<T>>().Setup(m => m.Expression).Returns(queryableData.Expression);
         mockSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(queryableData.ElementType);
         mockSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(queryableData.GetEnumerator());
+
+        // Mock async operations
         mockSet.As<IAsyncEnumerable<T>>().Setup(m => m.GetAsyncEnumerator(It.IsAny<CancellationToken>()))
             .Returns(new TestAsyncEnumerator<T>(queryableData.GetEnumerator()));
         mockSet.As<IQueryable<T>>().Setup(m => m.Provider).Returns(new TestAsyncQueryProvider<T>(queryableData.Provider));
+
+        // Mocking async Count method
+        mockSet.Setup(m => m.CountAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(queryableData.Count());
 
         return mockSet;
     }
@@ -37,7 +43,6 @@ public static class MockDbSetHelper
 
     private static object GetPrimaryKeyValue<T>(T entity)
     {
-        // Assuming the primary key is a property ending with "Id"
         var keyProperty = typeof(T).GetProperties().FirstOrDefault(p => p.Name.EndsWith("Id"));
         if (keyProperty == null)
         {
@@ -76,12 +81,15 @@ public class TestAsyncQueryProvider<TEntity> : IAsyncQueryProvider
         return _inner.Execute<TResult>(expression);
     }
 
+    public IAsyncEnumerable<TResult> ExecuteAsync<TResult>(Expression expression)
+    {
+        var executionResult = Execute(expression);
+        return new TestAsyncEnumerable<TResult>(new[] { (TResult)executionResult });
+    }
+
     public TResult ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken)
     {
-        // Ensure the result is wrapped in a task
         var executionResult = Execute(expression);
-
-        // Return the execution result as a Task<TResult>
         return Task.FromResult((TResult)executionResult).Result;
     }
 }

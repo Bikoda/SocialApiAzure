@@ -10,57 +10,144 @@ namespace SocialApi.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
+
     public class CloseBidsController : ControllerBase
     {
+        private readonly ILogger<CloseBidsController> _logger;
         private readonly IWebSocialDbContext _dbContext;
 
-        public CloseBidsController(IWebSocialDbContext dbContext)
+        // Combine both constructors into one
+        public CloseBidsController(IWebSocialDbContext dbContext, ILogger<CloseBidsController> logger)
         {
-            _dbContext = dbContext;
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        // GET: api/CloseBids
-        [HttpGet]
-        public async Task<IActionResult> GetAllClosedBids()
-        {
-            var closeBids = await _dbContext.CloseBids
-                .Include(cb => cb.Bid)
-                .Include(cb => cb.Nft)
-                .Include(cb => cb.User)
-                .ToListAsync();
-
-            var response = closeBids.Select(cb => new CloseBidsDto
-            {
-                CloseBidId = cb.CloseBidId,
-                BidId = cb.BidId,
-                NftId = cb.NftId,
-                HighestBidder = cb.HighestBidder,
-                Amount = cb.Amount,
-                CloseTime = cb.CloseTime
-            });
-
-            return Ok(response);
-        }
-
-        // GET: api/CloseBids/{id}
         [HttpGet("{id}")]
         public async Task<IActionResult> GetClosedBid(long id)
         {
-            // Retrieve the CloseBid from the database
             var closeBid = await _dbContext.CloseBids
                 .FirstOrDefaultAsync(cb => cb.CloseBidId == id);
 
-            // Return NotFound if the CloseBid doesn't exist
             if (closeBid == null)
             {
-                return NotFound(new { Message = "Closed bid not found." });
+                return NotFound();  // Return NotFoundResult without any body content
             }
 
-            // Map the CloseBid entity to a DTO
-            var response = MapToDto(closeBid);
+            var response = new CloseBidsDto
+            {
+                CloseBidId = closeBid.CloseBidId,
+                BidId = closeBid.BidId,
+                NftId = closeBid.NftId,
+                HighestBidder = closeBid.HighestBidder,
+                Amount = closeBid.Amount,
+                CloseTime = closeBid.CloseTime
+            };
 
-            // Return the DTO with a 200 OK response
             return Ok(response);
+        }
+
+        [HttpGet("paginated")]
+        public async Task<IActionResult> GetPaginatedClosedBids(int page = 0, int pageSize = 10)
+        {
+            try
+            {
+                if (page < 0 || pageSize <= 0)
+                {
+                    return BadRequest(new { Message = "Invalid input: 'page' must be 0 or greater, and 'pageSize' must be greater than 0." });
+                }
+
+                var query = _dbContext.CloseBids
+                    .Include(cb => cb.Bid)
+                    .Include(cb => cb.Nft)
+                    .Include(cb => cb.User)
+                    .AsQueryable();
+
+                int totalItems = await query.CountAsync();
+                int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+                var closeBids = await query
+                    .Skip(page * pageSize)
+                    .Take(pageSize)
+                    .Select(cb => new CloseBidsDto
+                    {
+                        CloseBidId = cb.CloseBidId,
+                        BidId = cb.BidId,
+                        NftId = cb.NftId,
+                        HighestBidder = cb.HighestBidder,
+                        Amount = cb.Amount,
+                        CloseTime = cb.CloseTime
+                    })
+                    .ToListAsync();
+
+                var response = new CloseBidsPaginatedResponse
+                {
+                    CloseBids = closeBids,
+                    From = page * pageSize + 1,
+                    To = Math.Min((page + 1) * pageSize, totalItems),
+                    Total = totalItems,
+                    TotalPages = totalPages
+                };
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred in {MethodName}: {Message}", nameof(GetPaginatedClosedBids), ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+               // GET: api/CloseBids/nft/{nftId}
+        [HttpGet("nft/{nftId}")]
+        public async Task<IActionResult> GetClosedBidsByNftId(long nftId, int page = 0, int pageSize = 10)
+        {
+            if (page < 0 || pageSize <= 0)
+            {
+                return BadRequest(new { Message = "Invalid input: 'page' must be 0 or greater, and 'pageSize' must be greater than 0." });
+            }
+
+            try
+            {
+                var query = _dbContext.CloseBids
+                    .Include(cb => cb.Bid)
+                    .Include(cb => cb.Nft)
+                    .Include(cb => cb.User)
+                    .Where(cb => cb.NftId == nftId)
+                    .AsQueryable();
+
+                int totalItems = await query.CountAsync();
+                int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+                var closeBids = await query
+                    .Skip(page * pageSize)
+                    .Take(pageSize)
+                    .Select(cb => new CloseBidsDto
+                    {
+                        CloseBidId = cb.CloseBidId,
+                        BidId = cb.BidId,
+                        NftId = cb.NftId,
+                        HighestBidder = cb.HighestBidder,
+                        Amount = cb.Amount,
+                        CloseTime = cb.CloseTime
+                    })
+                    .ToListAsync();
+
+                var response = new PaginatedCloseBidsResponse
+                {
+                    CloseBids = closeBids,
+                    From = page * pageSize + 1,
+                    To = Math.Min((page + 1) * pageSize, totalItems),
+                    Total = totalItems,
+                    TotalPages = totalPages
+                };
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Internal server error", Details = ex.Message });
+            }
         }
 
         // Helper function to map CloseBids to CloseBidsDto
@@ -76,50 +163,15 @@ namespace SocialApi.Controllers
                 CloseTime = closeBid.CloseTime
             };
         }
+    }
 
-
-
-        // POST: api/CloseBids
-        [HttpPost]
-        public async Task<IActionResult> AddClosedBid(CloseBidsDto dto)
-        {
-            var closedBid = new CloseBids
-            {
-                BidId = dto.BidId,
-                NftId = dto.NftId,
-                HighestBidder = dto.HighestBidder,
-                Amount = dto.Amount,
-                CloseTime = DateTime.UtcNow
-            };
-
-            await _dbContext.CloseBids.AddAsync(closedBid);
-            await _dbContext.SaveChangesAsync();
-
-            return Ok(new CloseBidsDto
-            {
-                CloseBidId = closedBid.CloseBidId,
-                BidId = closedBid.BidId,
-                NftId = closedBid.NftId,
-                HighestBidder = closedBid.HighestBidder,
-                Amount = closedBid.Amount,
-                CloseTime = closedBid.CloseTime
-            });
-        }
-
-        
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClosedBid(long id)
-        {
-            var closeBid = await _dbContext.CloseBids.FindAsync(id);
-            if (closeBid == null)
-            {
-                return NotFound();
-            }
-
-            _dbContext.CloseBids.Remove(closeBid);
-            await _dbContext.SaveChangesAsync();
-
-            return NoContent();
-        }
+    // Paginated response model for CloseBids
+    public class CloseBidsPaginatedResponse
+    {
+        public List<CloseBidsDto> CloseBids { get; set; }
+        public int From { get; set; }
+        public int To { get; set; }
+        public int Total { get; set; }
+        public int TotalPages { get; set; }
     }
 }

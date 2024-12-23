@@ -1,10 +1,9 @@
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SocialApi.Data;
-using SocialApi.Services; // Include the namespace for the BidClosingService
+using SocialApi.Services;
 using System.Text;
 
 namespace SocialApi
@@ -18,7 +17,14 @@ namespace SocialApi
             // Add services to the container.
             builder.Services.AddControllers();
 
-            // Configure Swagger/OpenAPI with JWT support
+            // Add database context and interface registration
+            builder.Services.AddDbContext<WebSocialDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("WebSocialConnectionString")));
+
+            // Register IWebSocialDbContext to resolve to WebSocialDbContext
+            builder.Services.AddScoped<IWebSocialDbContext>(provider => provider.GetRequiredService<WebSocialDbContext>());
+
+            // Add Swagger/OpenAPI with JWT support
             builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
@@ -56,26 +62,11 @@ namespace SocialApi
                 });
             });
 
-            // Add CORS policy
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAll", builder =>
-                    builder.AllowAnyOrigin()
-                           .AllowAnyMethod()
-                           .AllowAnyHeader());
-            });
-
-            // Add database context and interface registration
-            builder.Services.AddDbContext<IWebSocialDbContext, WebSocialDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("WebSocialConnectionString")));
-
-            // Add JWT Authentication
+            // Add authentication and JWT handling
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
                 var key = builder.Configuration["Jwt:Key"];
-
-                // Check if the key is null or empty and handle the case
                 if (string.IsNullOrEmpty(key))
                 {
                     throw new InvalidOperationException("JWT Key is not configured properly in app settings.");
