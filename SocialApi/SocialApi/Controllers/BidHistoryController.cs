@@ -7,6 +7,7 @@ using SocialApi.Models.DTO;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 
 public class BidHistoryController : ControllerBase
 {

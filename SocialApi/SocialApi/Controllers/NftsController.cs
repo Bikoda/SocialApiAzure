@@ -12,7 +12,8 @@ namespace SocialApi.Controllers
     //GET: https://localhost:7279/api/Logs
     [Route("api/[controller]")]
     [ApiController]
-    
+    [Authorize]
+
 
     public class NftsController : ControllerBase
     {
