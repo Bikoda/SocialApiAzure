@@ -11,6 +11,7 @@ namespace SocialApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TagsController : ControllerBase
     {
         private readonly WebSocialDbContext _context;
