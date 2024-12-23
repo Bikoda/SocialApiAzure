@@ -17,8 +17,5 @@ namespace SocialApi.Models.Domain
 
         public ICollection<NftTags> NftTags { get; set; }
 
-
-        // Navigation property to related Nfts
-        public ICollection<Nfts> Nfts { get; set; }  // A tag can have many NFTs
     }
 }

@@ -12,7 +12,7 @@ namespace SocialApi.Controllers
     //GET: https://localhost:7279/api/Logs
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    
 
     public class NftsController : ControllerBase
     {
@@ -164,88 +164,7 @@ namespace SocialApi.Controllers
             }
         }
 
-        /*[HttpGet]
-        [Route("page-nfts")]
-        public IActionResult GetPageNfts(int page, int pageSize, string orderBy = "Likes", bool? isNsfw = null)
-        {
-            try
-            {
-                
-                if (page < 0 || pageSize <= 0)
-                {
-                    return BadRequest("Invalid input: 'page' must be 0 or greater, and 'pageSize' must be greater than 0.");
-                }
-
-                // Validate orderBy parameter
-                if (orderBy != "Likes" && orderBy != "Views" && orderBy != "CreatedOn")
-                {
-                    return BadRequest("Invalid input: 'orderBy' must be 'Likes', 'Views', or 'CreatedOn'.");
-                }
-
-                // Base query
-                var nftQuery = dbContext.Nfts.AsQueryable();
-
-                // Apply filtering for IsNsfw if provided
-                if (isNsfw.HasValue)
-                {
-                    nftQuery = nftQuery.Where(x => x.IsNsfw == isNsfw.Value);
-                }
-
-                // Dynamic ordering based on the orderBy parameter
-                switch (orderBy)
-                {
-                    case "Likes":
-                        nftQuery = nftQuery.OrderByDescending(x => x.Likes);
-                        break;
-
-                    case "Views":
-                        nftQuery = nftQuery.OrderByDescending(x => x.Views);
-                        break;
-
-                    case "CreatedOn":
-                        nftQuery = nftQuery.OrderByDescending(x => x.CreatedOn);
-                        break;
-                }
-
-                // Total number of filtered nft
-                int total = nftQuery.Count();
-                int totalPages = (int)Math.Ceiling(total / (double)pageSize); // Calculate total pages
-
-                // Calculate the starting index for the page
-                int skip = page * pageSize;
-
-                // Apply pagination and projection
-                var nft = nftQuery
-                    .Skip(skip) // Skip items for previous pages
-                    .Take(pageSize) // Take items for the current page
-                    .Select(x => new
-                    {
-                        nftId = x.NftId, // i may have broken it . NftId goes grat but it was working fine.
-                        nftAddress = x.NftAddress,
-                        views = x.Views,
-                        likes = x.Likes,
-                        isNsfw = x.IsNsfw,
-                        createdOn = x.CreatedOn
-                    })
-                    .ToList(); // Convert the result to a list
-
-                // Create the response object
-                var result = new
-                {
-                    Nft = nft,
-                    From = skip + 1, // First item index of this page
-                    To = Math.Min(skip + nft.Count, total), // Last item index of this page
-                    Total = total, // Total number of nfts
-                    Pages = totalPages - 1 // Total number of pages
-                };
-
-                return Ok(result); // Return the result object
-            }
-            catch (Exception ex2)
-            {
-                return BadRequest(ex2.Message); // Handle any exceptions
-            }
-        }*/
+        
 
         [HttpPost]
         public IActionResult CreateNft([FromBody] AddNftRequestDto nftToAdd)
